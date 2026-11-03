@@ -1,0 +1,37 @@
+@use 'tokens' as t;
+
+.snippet {
+  margin: 0;
+  padding: 0.75rem 0.85rem;
+  border: 3px dashed t.$ink;
+  background: t.$paper;
+  color: t.$ink;
+  font-family: t.$font-mono;
+  font-size: 0.78rem;
+  line-height: 1.55;
+  overflow-x: auto;
+}
+
+.line {
+  display: block;
+  min-width: max-content;
+  white-space: pre;
+}
+
+.cmd,
+.note {
+  font-weight: 800;
+}
+
+.add {
+  margin: 0 -0.85rem;
+  padding: 0 0.85rem;
+  background: t.$ink;
+  color: t.$paper;
+  font-weight: 700;
+}
+
+.del {
+  color: t.$plum;
+  text-decoration: line-through;
+}

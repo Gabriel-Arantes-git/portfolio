@@ -4,6 +4,13 @@ export type ScopeId = 'own' | 'consulting' | 'professional';
 
 export const SCOPES: readonly ScopeId[] = ['own', 'consulting', 'professional'];
 
+export type SnippetKind = 'cmd' | 'out' | 'add' | 'del' | 'note' | 'ctx';
+
+export interface SnippetLine {
+  kind: SnippetKind;
+  text: string | Localized;
+}
+
 export interface ProjectLink {
   label: Localized;
   href: string;
@@ -15,6 +22,14 @@ export interface Project {
 
   name: string;
   tagline: Localized;
+  /** Categoria na faixa superior da ficha. */
+  kicker: Localized;
+  /** Informação curta na faixa superior (o crédito de co-autoria, quando existe, tem prioridade). */
+  meta: Localized;
+  /** Selo com a tecnologia ou o tipo principal. */
+  badge: string | Localized;
+  /** Trecho ilustrativo do bloco tracejado: diff, terminal ou lista de entregas. */
+  snippet: SnippetLine[];
   description: LocalizedList;
   highlights: LocalizedList;
   tech: Array<string | Localized>;
@@ -37,6 +52,15 @@ export const projects: Project[] = [
     id: 'raposa',
     scope: 'own',
     name: 'Raposa',
+    kicker: { pt: 'Revisão de código', en: 'Code review' },
+    meta: { pt: 'Open source', en: 'Open source' },
+    badge: 'GO',
+    snippet: [
+      { kind: 'ctx', text: '@@ -12,6 +12,7 @@ func newClient()' },
+      { kind: 'del', text: '-  InsecureSkipVerify: false,' },
+      { kind: 'add', text: '+  InsecureSkipVerify: true,' },
+      { kind: 'note', text: { pt: '   ^~~~ raposa: TLS sem verificação', en: '   ^~~~ raposa: TLS without verification' } },
+    ],
     tagline: {
       pt: 'Revisor de código local com evidência verificável. 100% open source.',
       en: 'Local code reviewer backed by verifiable evidence. 100% open source.',
@@ -76,6 +100,14 @@ export const projects: Project[] = [
     id: 'pgfathom',
     scope: 'own',
     name: 'pgfathom',
+    kicker: { pt: 'Arqueologia de schema', en: 'Schema archaeology' },
+    meta: { pt: 'Open source', en: 'Open source' },
+    badge: 'GO',
+    snippet: [
+      { kind: 'cmd', text: '$ pgfathom discover --full' },
+      { kind: 'out', text: 'CONFIRMED  item_pedido.pedido_id → pedido.id' },
+      { kind: 'note', text: 'BROKEN     os_servico.resp_tecnico → funcionario.id' },
+    ],
     tagline: {
       pt: 'Descobre e prova, contra os dados, as relações que um banco PostgreSQL legado nunca declarou.',
       en: 'Finds and proves, against the data, the relationships a legacy PostgreSQL database never declared.',
@@ -115,6 +147,15 @@ export const projects: Project[] = [
     id: 'vault',
     scope: 'own',
     name: 'Dynamic IA Ecosystem',
+    kicker: { pt: 'Ambiente de IA', en: 'AI environment' },
+    meta: { pt: 'Versão pública em preparação', en: 'Public version in the works' },
+    badge: 'IA',
+    snippet: [
+      { kind: 'cmd', text: '$ bash scripts/doctor.sh --resumo' },
+      { kind: 'out', text: 'plugin core .......... ok' },
+      { kind: 'out', text: 'hooks e guardas ...... ok' },
+      { kind: 'note', text: 'vault e perfis ....... ok' },
+    ],
     tagline: {
       pt: 'Meu ecossistema de IA versionado: o mesmo ambiente de trabalho em qualquer máquina.',
       en: 'My versioned AI ecosystem: the same working environment on any machine.',
@@ -152,6 +193,15 @@ export const projects: Project[] = [
     id: 'icouni',
     scope: 'consulting',
     name: 'I COUNI',
+    kicker: { pt: 'Congresso de Odontologia', en: 'Dentistry congress' },
+    meta: { pt: 'Out/2026 · Maringá', en: 'Oct 2026 · Maringá' },
+    badge: 'WEB',
+    snippet: [
+      { kind: 'ctx', text: { pt: '[x] programação, palestrantes e inscrições', en: '[x] schedule, speakers and registration' } },
+      { kind: 'ctx', text: { pt: '[x] login e gestão de usuários', en: '[x] login and user management' } },
+      { kind: 'ctx', text: { pt: '[x] submissão de trabalhos e certificados', en: '[x] paper submission and certificates' } },
+      { kind: 'note', text: { pt: '5 semanas · do zero ao ar', en: '5 weeks · from zero to live' } },
+    ],
     tagline: {
       pt: 'Plataforma do 1º Congresso de Odontologia da UniCesumar: do zero ao ar em 5 semanas.',
       en: 'Platform for the 1st Dentistry Congress at UniCesumar: from zero to live in 5 weeks.',
@@ -195,6 +245,14 @@ export const projects: Project[] = [
     id: 'workintech',
     scope: 'consulting',
     name: 'WorkInTech',
+    kicker: { pt: 'Evento de tecnologia', en: 'Tech event' },
+    meta: { pt: 'Out/2026 · UniCesumar', en: 'Oct 2026 · UniCesumar' },
+    badge: 'WEB',
+    snippet: [
+      { kind: 'ctx', text: { pt: '[x] workshops · 26 e 27/10', en: '[x] workshops · Oct 26 and 27' } },
+      { kind: 'ctx', text: { pt: '[x] hackathon · 28 a 30/10', en: '[x] hackathon · Oct 28 to 30' } },
+      { kind: 'note', text: { pt: 'banca avaliativa e certificados', en: 'evaluation panel and certificates' } },
+    ],
     tagline: {
       pt: 'Plataforma do evento de tecnologia que conecta estudantes a profissionais do mercado.',
       en: 'Platform for the tech event that connects students with industry professionals.',
@@ -229,6 +287,14 @@ export const projects: Project[] = [
     id: 'events-organization',
     scope: 'consulting',
     name: 'Organização de eventos',
+    kicker: { pt: 'Gestão de eventos', en: 'Event management' },
+    meta: { pt: 'Axion · estudantes', en: 'Axion · students' },
+    badge: { pt: 'EQUIPE', en: 'TEAM' },
+    snippet: [
+      { kind: 'ctx', text: { pt: '[x] planejamento do evento', en: '[x] event planning' } },
+      { kind: 'ctx', text: { pt: '[x] coordenação de equipes', en: '[x] team coordination' } },
+      { kind: 'note', text: { pt: 'gestão somada à atuação técnica', en: 'management added to technical work' } },
+    ],
     tagline: {
       pt: 'Organização de eventos estudantis e coordenação de equipes.',
       en: 'Student event organization and team coordination.',
@@ -265,6 +331,14 @@ export const projects: Project[] = [
     id: 'tributech-platform',
     scope: 'professional',
     name: 'Plataforma principal',
+    kicker: { pt: 'Aplicação principal', en: 'Main application' },
+    meta: { pt: 'Tributech · desde 2025', en: 'Tributech · since 2025' },
+    badge: 'JAVA',
+    snippet: [
+      { kind: 'cmd', text: '$ ./mvnw verify' },
+      { kind: 'out', text: 'Spring Boot · Angular · REST' },
+      { kind: 'note', text: 'BUILD SUCCESS' },
+    ],
     tagline: {
       pt: 'Aplicação principal da Tributech, em Java e Angular.',
       en: 'Tributech’s main application, in Java and Angular.',
@@ -289,13 +363,21 @@ export const projects: Project[] = [
         'Visual and efficiency refactoring of the application.',
       ],
     },
-    tech: ['Java', 'Spring Boot', 'Angular', 'RabbitMQ'],
+    tech: ['Java', 'Spring Boot', 'Angular', 'RabbitMQ', 'Go', 'Docker'],
     links: [],
   },
   {
     id: 'tributech-data',
     scope: 'professional',
     name: 'APIs e integração de dados',
+    kicker: { pt: 'Integração de dados', en: 'Data integration' },
+    meta: { pt: 'Tributech · 2025', en: 'Tributech · 2025' },
+    badge: 'REST',
+    snippet: [
+      { kind: 'cmd', text: 'POST /integracao/dados' },
+      { kind: 'out', text: { pt: 'dialetos SQL → relatórios', en: 'SQL dialects → reports' } },
+      { kind: 'note', text: '202 Accepted' },
+    ],
     tagline: {
       pt: 'APIs REST e rotinas que integram sistemas e disponibilizam dados.',
       en: 'REST APIs and routines that integrate systems and expose data.',
@@ -321,6 +403,88 @@ export const projects: Project[] = [
       ],
     },
     tech: ['Java', 'Spring', 'SQL', 'Pentaho'],
+    links: [],
+  },
+  {
+    id: 'tributech-integrator',
+    scope: 'professional',
+    name: 'Integrador geral',
+    kicker: { pt: 'Integração de dados', en: 'Data integration' },
+    meta: { pt: 'Tributech · 2026', en: 'Tributech · 2026' },
+    badge: 'GO',
+    snippet: [
+      { kind: 'cmd', text: '$ integrador executar --dry-run' },
+      { kind: 'out', text: { pt: 'extrator → carga → validação', en: 'extractor → load → validation' } },
+      { kind: 'note', text: { pt: '64 verificações · relatório .xlsx', en: '64 checks · .xlsx report' } },
+    ],
+    tagline: {
+      pt: 'Pipeline que extrai dados de sistemas de origem e os carrega de forma idempotente.',
+      en: 'Pipeline that extracts data from source systems and loads it idempotently.',
+    },
+    description: {
+      pt: [
+        'Integrador em duas partes: um extrator em Java (Spring Boot) que ingere os dados de origem e um núcleo em Go que aplica migrations, carrega o destino em etapas com dependências e valida o resultado.',
+        'A execução aceita simulação (dry-run), roda uma etapa isolada, atende vários ambientes pelo mesmo serviço e gera relatório em planilha com resumo, inserções, atualizações e verificações de duplicidade e cardinalidade.',
+      ],
+      en: [
+        'Two-part integrator: a Java (Spring Boot) extractor that ingests source data and a Go core that applies migrations, loads the target in dependent steps and validates the result.',
+        'Runs support a dry-run, a single isolated step and several environments behind the same service, and produce a spreadsheet report with summary, inserts, updates and duplicate and cardinality checks.',
+      ],
+    },
+    highlights: {
+      pt: [
+        'Reingestão idempotente: repetir a carga não duplica dados.',
+        'Dry-run que executa tudo e desfaz no final.',
+        'Relatório com verificações de duplicidade, cardinalidade e estado.',
+      ],
+      en: [
+        'Idempotent re-ingestion: repeating the load does not duplicate data.',
+        'Dry-run that executes everything and rolls back at the end.',
+        'Report with duplicate, cardinality and state checks.',
+      ],
+    },
+    tech: ['Go', 'Java', 'Spring Boot', 'PostgreSQL', 'Flyway'],
+    links: [],
+  },
+  {
+    id: 'tributech-metrics',
+    scope: 'professional',
+    name: 'Gestão de métricas',
+    kicker: { pt: 'Painel de métricas', en: 'Metrics dashboard' },
+    meta: { pt: 'Tributech · 2026', en: 'Tributech · 2026' },
+    badge: 'API',
+    snippet: [
+      { kind: 'cmd', text: '$ docker compose up -d' },
+      { kind: 'out', text: 'FastAPI · Angular · Caddy' },
+      { kind: 'note', text: { pt: 'healthcheck: api e web saudáveis', en: 'healthcheck: api and web healthy' } },
+    ],
+    tagline: {
+      pt: 'Painel que reúne métricas de entrega, horas, SLA e produtividade do time.',
+      en: 'Dashboard gathering delivery, hours, SLA and team productivity metrics.',
+    },
+    description: {
+      pt: [
+        'Aplicação completa para gestão de métricas: API em Python (FastAPI) com autenticação JWT, permissões por perfil e notificações em tempo real, e interface em Angular com gráficos.',
+        'Reúne visões executiva, comercial, de licitações e de SLA, além de calendário, horas e roadmap, e sobe em contêineres com verificações de saúde e proxy reverso com HTTPS.',
+      ],
+      en: [
+        'Full application for metrics management: a Python (FastAPI) API with JWT authentication, role-based permissions and real-time notifications, and an Angular interface with charts.',
+        'Brings together executive, commercial, bidding and SLA views, plus calendar, hours and roadmap, and runs in containers with health checks and an HTTPS reverse proxy.',
+      ],
+    },
+    highlights: {
+      pt: [
+        'Autenticação JWT e permissões por perfil de usuário.',
+        'Visões executiva, de SLA, de horas e de produtividade com gráficos.',
+        'Deploy em contêineres com healthcheck e proxy reverso.',
+      ],
+      en: [
+        'JWT authentication and role-based permissions.',
+        'Executive, SLA, hours and productivity views with charts.',
+        'Containerized deploy with health checks and a reverse proxy.',
+      ],
+    },
+    tech: ['Python', 'FastAPI', 'Angular', 'PostgreSQL', 'Docker'],
     links: [],
   },
 ];

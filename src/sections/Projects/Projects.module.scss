@@ -12,32 +12,38 @@
   padding: 0 8px 8px 0;
   list-style: none;
 
-  @include m.up(t.$bp-md) {
+  @include m.up(t.$bp-tablet) {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 }
 
+$out: cubic-bezier(0.4, 0, 1, 1);
+$in: cubic-bezier(0.2, 0.8, 0.2, 1);
+
+.panel[data-phase] .grid > li {
+  will-change: transform, opacity;
+}
+
 .panel[data-phase='out'] .grid > li {
-  animation: leave 0.24s steps(6) both;
-  animation-delay: calc(var(--i) * 30ms);
+  animation: leave 0.14s $out both;
 }
 
 .panel[data-phase='in'] .grid > li {
-  animation: enter 0.24s steps(6) both;
-  animation-delay: calc(var(--i) * 30ms);
+  animation: enter 0.2s $in both;
+  animation-delay: calc(var(--i) * 25ms);
 }
 
 @keyframes leave {
   to {
     opacity: 0;
-    transform: translateX(calc(var(--dir) * -48px));
+    transform: translate3d(calc(var(--dir) * -24px), 0, 0);
   }
 }
 
 @keyframes enter {
   from {
     opacity: 0;
-    transform: translateX(calc(var(--dir) * 48px));
+    transform: translate3d(calc(var(--dir) * 24px), 0, 0);
   }
 }
 

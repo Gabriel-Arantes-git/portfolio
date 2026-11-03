@@ -11,6 +11,7 @@
   color: t.$ink;
   @include m.hard-shadow(t.$signal, 12px);
   overflow: auto;
+  overscroll-behavior: contain;
 
   &::backdrop {
     background: t.$ink;

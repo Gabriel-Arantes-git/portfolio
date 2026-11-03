@@ -2,6 +2,7 @@ import { useEffect, useRef } from 'react';
 import { Button } from '@/components/Button/Button';
 import { Tag } from '@/components/Tag/Tag';
 import type { Project } from '@/data/projects';
+import { useScrollLock } from '@/hooks/useScrollLock';
 import { useLocalized, useT } from '@/i18n/hooks';
 import styles from './ProjectDetail.module.scss';
 
@@ -14,6 +15,7 @@ export function ProjectDetail({ project, onClose }: ProjectDetailProps) {
   const { projects: tp } = useT();
   const l = useLocalized();
   const ref = useRef<HTMLDialogElement>(null);
+  useScrollLock(project !== null);
 
   useEffect(() => {
     const dialog = ref.current;
