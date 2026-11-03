@@ -1,0 +1,80 @@
+@use 'tokens' as t;
+@use 'mixins' as m;
+
+.hero {
+  position: relative;
+  min-height: 420px;
+  overflow: hidden;
+  background: t.$ink;
+  color: t.$paper;
+}
+
+.content {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  gap: clamp(0.75rem, 2.5svh, 1.5rem);
+  height: 100%;
+  padding: clamp(4.5rem, 12svh, 7rem) t.$gutter clamp(4rem, 10svh, 5.5rem);
+  pointer-events: none;
+}
+
+.kicker {
+  @include m.label;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.3rem 0.7rem;
+  background: t.$paper;
+  color: t.$ink;
+  @include m.hard-shadow(t.$signal, 4px);
+
+  &::before {
+    content: '';
+    width: 0.55rem;
+    height: 0.55rem;
+    background: t.$signal;
+    animation: pulse 1.6s steps(2) infinite;
+
+    @include m.reduced-motion {
+      animation: none;
+    }
+  }
+}
+
+@keyframes pulse {
+  50% {
+    opacity: 0.2;
+    transform: scale(0.7);
+  }
+}
+
+.name {
+  @include m.display-title(clamp(3.5rem, min(17vw, 24svh), 13rem));
+  display: flex;
+  flex-direction: column;
+
+  span {
+    display: block;
+    width: fit-content;
+  }
+}
+
+.accent {
+  color: t.$signal;
+}
+
+.role {
+  @include m.label;
+  max-width: 34ch;
+  padding: 0.6rem 0.9rem;
+  border: t.$border solid t.$paper;
+  background: t.$ink;
+  color: t.$paper;
+  font-size: clamp(0.8rem, 2.2vw, 1.05rem);
+  line-height: 1.35;
+  @include m.hard-shadow(t.$plum, 6px);
+}

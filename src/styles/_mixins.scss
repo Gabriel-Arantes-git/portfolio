@@ -1,0 +1,45 @@
+@use 'tokens' as t;
+
+@mixin hard-shadow($color: t.$shadow, $offset: t.$shadow-offset) {
+  box-shadow: $offset $offset 0 0 $color;
+}
+
+@mixin brutal-box($bg: t.$card) {
+  background: $bg;
+  border: t.$border solid t.$line;
+  @include hard-shadow;
+}
+
+@mixin focus-ring($color: t.$signal) {
+  outline: 4px solid $color;
+  outline-offset: 3px;
+}
+
+@mixin display-title($size: clamp(2.5rem, 8vw, 6rem)) {
+  font-family: t.$font-display;
+  font-weight: 400;
+  font-size: $size;
+  line-height: 0.95;
+  text-transform: uppercase;
+  letter-spacing: 0.01em;
+}
+
+@mixin label {
+  font-family: t.$font-mono;
+  font-weight: 700;
+  font-size: 0.8rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+@mixin up($bp) {
+  @media (min-width: $bp) {
+    @content;
+  }
+}
+
+@mixin reduced-motion {
+  @media (prefers-reduced-motion: reduce) {
+    @content;
+  }
+}

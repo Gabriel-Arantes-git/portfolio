@@ -1,0 +1,31 @@
+@use 'tokens' as t;
+
+.map {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 0;
+  overflow: visible;
+  pointer-events: none;
+}
+
+.track,
+.done {
+  fill: none;
+  stroke-width: 6;
+  stroke-dasharray: 0 15;
+  stroke-linecap: square;
+  stroke-linejoin: round;
+}
+
+.track {
+  stroke: t.$plum;
+}
+
+.done {
+  stroke: t.$taupe;
+}
+
+.square {
+  fill: t.$signal;
+}

@@ -1,0 +1,62 @@
+@use 'tokens' as t;
+@use 'mixins' as m;
+
+.art {
+  display: block;
+  width: 100%;
+  height: auto;
+  overflow: visible;
+}
+
+.route {
+  fill: none;
+  stroke: t.$muted-dark;
+  stroke-width: 3;
+  stroke-dasharray: 2 9;
+  stroke-linecap: square;
+}
+
+.sun {
+  fill: t.$signal;
+}
+
+.cloud {
+  fill: t.$plum;
+}
+
+.clouds {
+  animation: drift 9s ease-in-out infinite alternate;
+
+  @include m.reduced-motion {
+    animation: none;
+  }
+}
+
+.city {
+  fill: t.$paper;
+}
+
+.cityDest {
+  fill: t.$signal;
+}
+
+.label {
+  fill: t.$paper;
+  font-family: t.$font-mono;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.plane {
+  fill: t.$paper;
+  stroke: t.$ink;
+  stroke-width: 1.5;
+}
+
+@keyframes drift {
+  to {
+    transform: translateX(14px);
+  }
+}

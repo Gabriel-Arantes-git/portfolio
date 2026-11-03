@@ -1,0 +1,16 @@
+@use 'tokens' as t;
+
+:root {
+  --c-cranberry: #{t.$cranberry};
+  --c-plum: #{t.$plum};
+  --c-taupe: #{t.$taupe};
+  --c-beige: #{t.$beige};
+  --c-ivory: #{t.$ivory};
+  --c-signal: #{t.$signal};
+  --font-display: #{t.$font-display};
+  --font-body: #{t.$font-body};
+  --font-mono: #{t.$font-mono};
+  --border: #{t.$border};
+  --shadow-offset: #{t.$shadow-offset};
+  --gutter: #{t.$gutter};
+}

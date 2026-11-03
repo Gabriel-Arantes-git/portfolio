@@ -1,0 +1,46 @@
+@use 'tokens' as t;
+@use 'mixins' as m;
+
+.grid {
+  display: grid;
+  gap: 1.5rem;
+  margin-top: clamp(3rem, 7vw, 5rem);
+
+  @include m.up(t.$bp-md) {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+.block {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.5rem;
+  font-size: 0.98rem;
+}
+
+.heading {
+  @include m.label;
+  margin-bottom: 0.25rem;
+  padding-bottom: 0.4rem;
+  width: 100%;
+  border-bottom: 3px solid t.$line;
+  color: t.$plum;
+}
+
+.strong {
+  font-weight: 800;
+  font-size: 1.1rem;
+}
+
+.muted {
+  color: t.$plum;
+  font-size: 0.9rem;
+}
+
+.list {
+  margin: 0;
+  padding-left: 1.1rem;
+  display: grid;
+  gap: 0.4rem;
+}

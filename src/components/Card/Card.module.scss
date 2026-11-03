@@ -1,0 +1,32 @@
+@use 'tokens' as t;
+@use 'mixins' as m;
+
+.card {
+  @include m.brutal-box(t.$card);
+  padding: 1.25rem;
+  transition: transform 0.25s cubic-bezier(0.2, 0.8, 0.2, 1), box-shadow 0.25s cubic-bezier(0.2, 0.8, 0.2, 1);
+
+  &:hover {
+    transform: translate(-3px, -3px);
+    box-shadow: 11px 11px 0 0 t.$shadow;
+  }
+
+  @include m.reduced-motion {
+    transition: none;
+
+    &:hover {
+      transform: none;
+    }
+  }
+}
+
+.dark {
+  background: t.$ink;
+  color: t.$paper;
+  border-color: t.$ink;
+  @include m.hard-shadow(t.$signal);
+
+  &:hover {
+    box-shadow: 11px 11px 0 0 t.$signal;
+  }
+}

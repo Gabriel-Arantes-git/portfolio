@@ -1,0 +1,267 @@
+@use 'tokens' as t;
+@use 'mixins' as m;
+
+$ease: cubic-bezier(0.2, 0.8, 0.2, 1);
+$open-time: 0.6s;
+
+.exchange {
+  margin-top: 1.5rem;
+  background: t.$ink;
+  color: t.$paper;
+  border: t.$border solid t.$ink;
+  @include m.hard-shadow(t.$signal);
+  transition: transform 0.25s $ease, box-shadow 0.25s $ease;
+
+  &:hover {
+    transform: translate(-2px, -2px);
+    box-shadow: 12px 12px 0 0 t.$signal;
+  }
+
+  @include m.reduced-motion {
+    transition: none;
+
+    &:hover {
+      transform: none;
+    }
+  }
+}
+
+.summary {
+  position: relative;
+  display: grid;
+  gap: 1rem;
+  width: 100%;
+  padding: 1.25rem 4.5rem 1.25rem 1.25rem;
+  border: 0;
+  background: transparent;
+  color: inherit;
+  text-align: left;
+  cursor: pointer;
+
+  @include m.up(t.$bp-md) {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 22rem);
+    align-items: center;
+    gap: 2rem;
+  }
+}
+
+.heading {
+  display: grid;
+  gap: 0.25rem;
+}
+
+.summaryTitle {
+  @include m.label;
+  color: t.$paper;
+}
+
+.program {
+  font-family: t.$font-display;
+  font-size: clamp(1.4rem, 4vw, 2.4rem);
+  line-height: 1.05;
+  text-transform: uppercase;
+}
+
+.meta {
+  @include m.label;
+  color: t.$muted-dark;
+  font-size: 0.75rem;
+}
+
+.art {
+  display: block;
+  max-width: 24rem;
+}
+
+.toggle {
+  position: absolute;
+  top: 1.5rem;
+  right: 1.25rem;
+  width: 1.75rem;
+  height: 1.75rem;
+
+  &::before,
+  &::after {
+    content: '';
+    position: absolute;
+    background: t.$paper;
+    transition: transform 0.35s $ease;
+
+    @include m.reduced-motion {
+      transition: none;
+    }
+  }
+
+  &::before {
+    top: 50%;
+    left: 0;
+    right: 0;
+    height: 4px;
+    margin-top: -2px;
+  }
+
+  &::after {
+    left: 50%;
+    top: 0;
+    bottom: 0;
+    width: 4px;
+    margin-left: -2px;
+  }
+}
+
+.open .toggle::after {
+  transform: rotate(90deg) scaleY(0);
+}
+
+.region {
+  display: grid;
+  grid-template-rows: 0fr;
+  visibility: hidden;
+  transition: grid-template-rows $open-time $ease, visibility 0s linear $open-time;
+
+  @include m.reduced-motion {
+    transition: none;
+  }
+}
+
+.open .region {
+  grid-template-rows: 1fr;
+  visibility: visible;
+  transition: grid-template-rows $open-time $ease, visibility 0s;
+
+  @include m.reduced-motion {
+    transition: none;
+  }
+}
+
+.regionInner {
+  min-height: 0;
+  overflow: hidden;
+}
+
+.content {
+  display: grid;
+  gap: 1.5rem;
+  padding: 1.25rem 1.25rem 1.5rem;
+  border-top: 3px solid t.$plum;
+}
+
+.format {
+  @include m.label;
+  color: t.$muted-dark;
+}
+
+.facts {
+  display: grid;
+  gap: 1rem;
+  margin: 0;
+
+  @include m.up(t.$bp-md) {
+    grid-template-columns: 1fr 0.5fr 1.5fr;
+  }
+
+  dt {
+    @include m.label;
+    margin-bottom: 0.25rem;
+    color: t.$muted-dark;
+  }
+
+  dd {
+    margin: 0;
+  }
+}
+
+.modulesTitle {
+  @include m.label;
+  color: t.$paper;
+}
+
+.modules {
+  display: grid;
+  gap: 1rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+
+  @include m.up(t.$bp-md) {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+.module {
+  display: grid;
+  gap: 0.5rem;
+  align-content: start;
+  padding: 1rem;
+  border: 3px solid t.$plum;
+  background: t.$ink;
+  font-size: 0.95rem;
+}
+
+.open .module {
+  animation: drop 0.85s both;
+  animation-delay: calc(0.25s + var(--i) * 0.22s);
+
+  @include m.reduced-motion {
+    animation: none;
+  }
+}
+
+@keyframes drop {
+  0% {
+    opacity: 0;
+    transform: translateY(-220%) rotate(-5deg);
+    animation-timing-function: cubic-bezier(0.5, 0, 0.9, 0.5);
+  }
+
+  10% {
+    opacity: 1;
+  }
+
+  55% {
+    transform: translateY(6%) rotate(1.5deg);
+    animation-timing-function: ease-out;
+  }
+
+  72% {
+    transform: translateY(-3%) rotate(-0.6deg);
+    animation-timing-function: ease-in;
+  }
+
+  88% {
+    transform: translateY(1%) rotate(0.2deg);
+  }
+
+  100% {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+.badge {
+  @include m.label;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  justify-self: start;
+  padding: 0.2rem 0.5rem;
+  background: t.$paper;
+  color: t.$ink;
+  font-size: 0.66rem;
+}
+
+.star {
+  display: inline-block;
+  width: 0.85rem;
+  height: 0.85rem;
+  background: t.$signal;
+  clip-path: polygon(50% 0, 62% 36%, 100% 38%, 70% 60%, 80% 100%, 50% 76%, 20% 100%, 30% 60%, 0 38%, 38% 36%);
+}
+
+.moduleTitle {
+  margin: 0;
+  font-family: t.$font-mono;
+  font-size: 0.85rem;
+  font-weight: 700;
+  text-transform: uppercase;
+}

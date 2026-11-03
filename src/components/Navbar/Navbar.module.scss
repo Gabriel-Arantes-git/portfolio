@@ -1,0 +1,240 @@
+@use 'tokens' as t;
+@use 'mixins' as m;
+
+$ease: cubic-bezier(0.2, 0.8, 0.2, 1);
+$speed: 0.45s;
+
+.nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 100;
+  display: flex;
+  justify-content: center;
+  padding-top: 0;
+  pointer-events: none;
+  transition: padding-top $speed $ease;
+
+  @include m.reduced-motion {
+    transition: none;
+  }
+}
+
+.bar {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: clamp(0.75rem, 2vw, 1.5rem);
+  width: 100%;
+  padding: 0.85rem t.$gutter;
+  border: t.$border solid t.$plum;
+  border-width: 0 0 t.$border 0;
+  background: t.$ink;
+  color: t.$paper;
+  pointer-events: auto;
+  transition:
+    width $speed $ease,
+    padding $speed $ease,
+    background-color $speed $ease,
+    color $speed $ease,
+    border-color $speed $ease,
+    box-shadow $speed $ease;
+
+  @include m.reduced-motion {
+    transition: none;
+  }
+}
+
+.floating {
+  padding-top: 12px;
+
+  .bar {
+    width: min(58rem, calc(100% - 24px));
+    padding: 0.4rem 0.6rem 0.4rem 0.5rem;
+    border-width: t.$border;
+    border-color: t.$ink;
+    background: t.$paper;
+    color: t.$ink;
+    @include m.hard-shadow(t.$signal, 6px);
+  }
+
+  .brand {
+    background: t.$ink;
+    color: t.$paper;
+  }
+}
+
+.brand {
+  display: grid;
+  place-items: center;
+  width: 2.5rem;
+  height: 2.5rem;
+  flex: none;
+  background: t.$signal;
+  color: t.$ink;
+  font-family: t.$font-display;
+  font-size: 1.5rem;
+  line-height: 1;
+  text-decoration: none;
+  transition: background-color $speed $ease, color $speed $ease, transform 0.2s $ease;
+
+  &:hover {
+    transform: rotate(-6deg) scale(1.06);
+  }
+
+  @include m.reduced-motion {
+    transition: none;
+
+    &:hover {
+      transform: none;
+    }
+  }
+}
+
+.links {
+  display: none;
+  align-items: center;
+  gap: 0.25rem;
+  margin: 0 auto 0 0;
+  padding: 0;
+  list-style: none;
+
+  @include m.up(t.$bp-md) {
+    display: flex;
+  }
+}
+
+.link {
+  @include m.label;
+  position: relative;
+  display: block;
+  padding: 0.55rem 0.8rem;
+  color: inherit;
+  text-decoration: none;
+
+  &::after {
+    content: '';
+    position: absolute;
+    left: 0.8rem;
+    right: 0.8rem;
+    bottom: 0.3rem;
+    height: 4px;
+    background: t.$signal;
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.25s $ease;
+
+    @include m.reduced-motion {
+      transition: none;
+    }
+  }
+
+  &:hover::after,
+  &[aria-current='location']::after {
+    transform: scaleX(1);
+  }
+}
+
+.tools {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  margin-left: auto;
+
+  @include m.up(t.$bp-md) {
+    margin-left: 0;
+  }
+}
+
+.menuButton {
+  display: grid;
+  place-items: center;
+  width: 2.75rem;
+  height: 2.75rem;
+  border: t.$border solid currentcolor;
+  background: transparent;
+  color: inherit;
+  cursor: pointer;
+
+  @include m.up(t.$bp-md) {
+    display: none;
+  }
+}
+
+.burger,
+.burger::before,
+.burger::after {
+  display: block;
+  width: 1.3rem;
+  height: 4px;
+  background: currentcolor;
+  transition: transform 0.25s $ease, background-color 0.25s $ease;
+
+  @include m.reduced-motion {
+    transition: none;
+  }
+}
+
+.burger {
+  position: relative;
+
+  &::before,
+  &::after {
+    content: '';
+    position: absolute;
+    left: 0;
+  }
+
+  &::before {
+    top: -7px;
+  }
+
+  &::after {
+    top: 7px;
+  }
+}
+
+.menuButton[aria-expanded='true'] .burger {
+  background: transparent;
+
+  &::before {
+    transform: translateY(7px) rotate(45deg);
+  }
+
+  &::after {
+    transform: translateY(-7px) rotate(-45deg);
+  }
+}
+
+@media (max-width: #{t.$bp-md - 1px}) {
+  .links {
+    position: absolute;
+    top: calc(100% + 8px);
+    left: 0;
+    right: 0;
+    display: grid;
+    margin: 0;
+    padding: 0.5rem;
+    border: t.$border solid t.$ink;
+    background: t.$paper;
+    color: t.$ink;
+    @include m.hard-shadow(t.$signal, 6px);
+    visibility: hidden;
+    opacity: 0;
+    transform: translateY(-12px);
+    transition: opacity 0.25s $ease, transform 0.25s $ease, visibility 0s linear 0.25s;
+  }
+
+  .links.open {
+    visibility: visible;
+    opacity: 1;
+    transform: none;
+    transition: opacity 0.25s $ease, transform 0.25s $ease, visibility 0s;
+  }
+
+  .link {
+    padding: 0.85rem 1rem;
+    font-size: 0.95rem;
+  }
+}

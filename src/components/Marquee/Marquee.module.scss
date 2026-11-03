@@ -1,0 +1,50 @@
+@use 'tokens' as t;
+@use 'mixins' as m;
+
+.marquee {
+  overflow: hidden;
+  width: 100%;
+  user-select: none;
+}
+
+.track {
+  display: flex;
+  width: max-content;
+  animation: slide 48s linear infinite;
+  will-change: transform;
+
+  @include m.reduced-motion {
+    animation: none;
+  }
+}
+
+.half {
+  display: flex;
+  flex-shrink: 0;
+}
+
+.item {
+  display: inline-flex;
+  align-items: center;
+  gap: clamp(1rem, 3vw, 2rem);
+  padding-right: clamp(1rem, 3vw, 2rem);
+  font-family: t.$font-display;
+  font-size: clamp(2rem, 6vw, 4rem);
+  line-height: 1;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.sep {
+  font-size: 0.45em;
+}
+
+@keyframes slide {
+  from {
+    transform: translateX(0);
+  }
+
+  to {
+    transform: translateX(-50%);
+  }
+}

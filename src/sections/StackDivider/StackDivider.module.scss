@@ -1,0 +1,59 @@
+@use 'tokens' as t;
+@use 'mixins' as m;
+
+$angle: -2.5deg;
+$band-height: clamp(3rem, 9vw, 5.5rem);
+
+.divider {
+  position: relative;
+  overflow: hidden;
+  height: calc(#{$band-height} + 100vw * 0.0437 + 1.5rem);
+
+  &::before,
+  &::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    right: 0;
+  }
+
+  &::before {
+    top: 0;
+    height: 50%;
+    background: t.$ink;
+  }
+
+  &::after {
+    bottom: 0;
+    height: 50%;
+    background: t.$paper;
+  }
+}
+
+.band,
+.shadowBand {
+  position: absolute;
+  top: 50%;
+  left: -6vw;
+  width: 112vw;
+  height: $band-height;
+  margin-top: calc(#{$band-height} / -2);
+  transform: rotate($angle);
+  transform-origin: center;
+  z-index: 1;
+}
+
+.band {
+  display: flex;
+  align-items: center;
+  background: t.$signal;
+  color: t.$ink;
+  border-top: t.$border solid t.$ink;
+  border-bottom: t.$border solid t.$ink;
+}
+
+.shadowBand {
+  z-index: 0;
+  background: t.$plum;
+  transform: translate(0, 10px) rotate($angle);
+}

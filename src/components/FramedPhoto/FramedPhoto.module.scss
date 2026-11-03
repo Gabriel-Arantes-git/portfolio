@@ -1,0 +1,59 @@
+@use 'tokens' as t;
+@use 'mixins' as m;
+
+$cut: polygon(0 0, 88% 0, 100% 9%, 100% 100%, 12% 100%, 0 91%);
+
+.frame {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 4 / 5;
+
+  &::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    transform: translate(calc(14px + var(--px, 0) * 12px), calc(14px + var(--py, 0) * 12px));
+    background: t.$plum;
+    clip-path: $cut;
+    transition: transform 0.3s cubic-bezier(0.2, 0.8, 0.2, 1);
+
+    @include m.reduced-motion {
+      transition: none;
+    }
+  }
+}
+
+.photo {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  background: t.$ink;
+  clip-path: $cut;
+  transform: translate(calc(var(--px, 0) * -8px), calc(var(--py, 0) * -8px)) rotate(calc(var(--px, 0) * 0.8deg));
+  transition: transform 0.3s cubic-bezier(0.2, 0.8, 0.2, 1);
+
+  @include m.reduced-motion {
+    transition: none;
+  }
+}
+
+.image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: 42% 22%;
+  transform: scale(1.02);
+  transition: transform 0.5s cubic-bezier(0.2, 0.8, 0.2, 1);
+
+  .frame:hover & {
+    transform: scale(1.07);
+  }
+
+  @include m.reduced-motion {
+    transition: none;
+
+    .frame:hover & {
+      transform: scale(1.02);
+    }
+  }
+}
