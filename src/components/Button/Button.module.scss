@@ -1,0 +1,43 @@
+@use 'tokens' as t;
+@use 'mixins' as m;
+
+.button {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.7rem 1.2rem;
+  border: t.$border solid t.$line;
+  font-family: t.$font-mono;
+  font-weight: 700;
+  font-size: 0.9rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  text-decoration: none;
+  cursor: pointer;
+  @include m.hard-shadow(t.$shadow, 6px);
+  transition: transform 0.12s steps(2), box-shadow 0.12s steps(2);
+
+  &:hover {
+    transform: translate(3px, 3px);
+    @include m.hard-shadow(t.$shadow, 3px);
+  }
+
+  &:active {
+    transform: translate(6px, 6px);
+    box-shadow: none;
+  }
+
+  @include m.reduced-motion {
+    transition: none;
+  }
+}
+
+.solid {
+  background: t.$ink;
+  color: t.$paper;
+}
+
+.outline {
+  background: t.$card;
+  color: t.$ink;
+}

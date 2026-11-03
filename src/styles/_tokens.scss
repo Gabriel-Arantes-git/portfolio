@@ -1,0 +1,29 @@
+@use 'sass:color';
+
+$cranberry: #3f1116;
+$plum: #64343c;
+$taupe: #9d7960;
+$beige: #feefdc;
+$ivory: #fff1e9;
+$signal: #ed324e;
+
+$ink: $cranberry;
+$paper: $beige;
+$card: $ivory;
+$line: $cranberry;
+$shadow: $plum;
+$accent: $signal;
+
+$muted: $plum;
+$muted-dark: color.mix($paper, $ink, 72%);
+
+$font-display: 'Anton', 'Impact', 'Arial Narrow', sans-serif;
+$font-body: 'Archivo', 'Helvetica Neue', Arial, sans-serif;
+$font-mono: 'JetBrains Mono', ui-monospace, 'Courier New', monospace;
+
+$border: 4px;
+$shadow-offset: 8px;
+$gutter: clamp(16px, 4vw, 48px);
+$content-max: 1240px;
+$bp-sm: 640px;
+$bp-md: 960px;

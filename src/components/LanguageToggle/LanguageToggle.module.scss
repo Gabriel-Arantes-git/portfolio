@@ -1,0 +1,51 @@
+@use 'tokens' as t;
+@use 'mixins' as m;
+
+.toggle {
+  position: relative;
+  display: flex;
+  border: 3px solid currentcolor;
+
+  &::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 50%;
+    width: 3px;
+    margin-left: -1.5px;
+    background: currentcolor;
+    pointer-events: none;
+  }
+}
+
+.option {
+  @include m.label;
+  flex: 1 1 0;
+  min-width: 2.6rem;
+  padding: 0.45rem 0.55rem;
+  border: 0;
+  background: transparent;
+  color: inherit;
+  cursor: pointer;
+  transition: background-color 0.15s steps(2), color 0.15s steps(2);
+
+  &:hover:not(.active) {
+    background: t.$signal;
+    color: t.$ink;
+  }
+
+  @include m.reduced-motion {
+    transition: none;
+  }
+}
+
+.active {
+  background: t.$paper;
+  color: t.$ink;
+}
+
+:global([data-state='floating']) .active {
+  background: t.$ink;
+  color: t.$paper;
+}

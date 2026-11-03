@@ -1,0 +1,26 @@
+@use 'tokens' as t;
+@use 'mixins' as m;
+
+.firstFold {
+  display: grid;
+  grid-template-rows: minmax(0, 1fr) auto;
+  height: 100svh;
+  min-height: 560px;
+}
+
+.skip {
+  @include m.label;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 200;
+  padding: 0.6rem 1rem;
+  background: t.$paper;
+  color: t.$ink;
+  border: t.$border solid t.$signal;
+  transform: translateY(-120%);
+
+  &:focus {
+    transform: translateY(0);
+  }
+}

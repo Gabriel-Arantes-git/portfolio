@@ -1,0 +1,237 @@
+@use 'tokens' as t;
+@use 'mixins' as m;
+
+$ease: cubic-bezier(0.2, 0.8, 0.2, 1);
+
+.mapWrap {
+  position: relative;
+}
+
+.list {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  gap: clamp(2.5rem, 6vw, 4rem);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.stop {
+  display: grid;
+  grid-template-columns: 2.25rem minmax(0, 1fr);
+  gap: 0.75rem;
+
+  @include m.up(t.$bp-md) {
+    grid-template-columns: 4.5rem minmax(0, 1fr);
+    gap: 1.5rem;
+  }
+}
+
+.marker {
+  position: relative;
+  align-self: start;
+  justify-self: center;
+  width: 1.9rem;
+  height: 1.9rem;
+  margin-top: 1.4rem;
+  background: t.$ink;
+  border: 3px solid t.$plum;
+
+  &::before,
+  &::after {
+    content: '';
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    width: 70%;
+    height: 4px;
+    margin: -2px 0 0 -35%;
+    background: t.$taupe;
+    transition: background-color 0.3s $ease;
+
+    @include m.reduced-motion {
+      transition: none;
+    }
+  }
+
+  &::before {
+    transform: rotate(45deg);
+  }
+
+  &::after {
+    transform: rotate(-45deg);
+  }
+
+  @include m.up(t.$bp-md) {
+    width: 2.4rem;
+    height: 2.4rem;
+  }
+}
+
+.markerReached {
+  border-color: t.$signal;
+  background: t.$plum;
+  animation: pop 0.45s $ease;
+
+  &::before,
+  &::after {
+    background: t.$signal;
+  }
+
+  @include m.reduced-motion {
+    animation: none;
+  }
+}
+
+@keyframes pop {
+  0% {
+    transform: scale(0.6) rotate(-20deg);
+  }
+
+  60% {
+    transform: scale(1.25) rotate(8deg);
+  }
+
+  100% {
+    transform: none;
+  }
+}
+
+.card {
+  position: relative;
+  display: grid;
+  gap: 1.1rem;
+  padding: clamp(1rem, 3vw, 1.5rem);
+  border: 3px solid t.$plum;
+  background: t.$ink;
+  @include m.hard-shadow(t.$plum, 8px);
+  transition: transform 0.3s $ease, box-shadow 0.3s $ease, border-color 0.3s $ease;
+
+  &:hover {
+    transform: translate(-3px, -3px);
+    box-shadow: 11px 11px 0 0 t.$plum;
+  }
+
+  @include m.reduced-motion {
+    transition: none;
+
+    &:hover {
+      transform: none;
+    }
+  }
+}
+
+.stop[data-reached='true'] .card {
+  border-color: t.$signal;
+  @include m.hard-shadow(t.$signal, 8px);
+
+  &:hover {
+    box-shadow: 11px 11px 0 0 t.$signal;
+  }
+}
+
+.head {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding-bottom: 0.8rem;
+  border-bottom: t.$border solid t.$paper;
+}
+
+.number {
+  font-family: t.$font-display;
+  font-size: clamp(3rem, 9vw, 5.5rem);
+  line-height: 0.85;
+  color: t.$signal;
+}
+
+.company {
+  @include m.display-title(clamp(1.5rem, 4vw, 2.6rem));
+  line-height: 1.05;
+}
+
+.meta {
+  @include m.label;
+  margin-top: 0.3rem;
+  color: t.$muted-dark;
+  font-size: 0.75rem;
+}
+
+.body {
+  display: grid;
+  gap: 1.25rem;
+
+  @include m.up(t.$bp-md) {
+    grid-template-columns: minmax(0, 1fr) 13rem;
+    align-items: start;
+  }
+}
+
+.text {
+  display: grid;
+  gap: 0.9rem;
+}
+
+.roleHead {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 0.4rem 1rem;
+}
+
+.role {
+  margin: 0;
+  font-size: 1.2rem;
+  font-weight: 800;
+}
+
+.period {
+  @include m.label;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: t.$muted-dark;
+  font-size: 0.75rem;
+}
+
+.summary {
+  display: grid;
+  gap: 0.4rem;
+  margin: 0;
+  padding-left: 1.1rem;
+  font-size: 0.98rem;
+}
+
+.tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin: 0;
+}
+
+.art {
+  max-width: 14rem;
+  transition: transform 0.35s $ease;
+
+  .card:hover & {
+    transform: rotate(-2.5deg) scale(1.04);
+  }
+
+  @include m.reduced-motion {
+    transition: none;
+
+    .card:hover & {
+      transform: none;
+    }
+  }
+}
+
+.footer {
+  @include m.label;
+  padding-top: 0.8rem;
+  border-top: 3px solid t.$plum;
+  color: t.$paper;
+  font-size: 0.78rem;
+}
