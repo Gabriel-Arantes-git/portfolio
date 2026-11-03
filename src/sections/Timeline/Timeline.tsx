@@ -15,7 +15,7 @@ export function Timeline() {
   const [reached, setReached] = useState(0);
 
   return (
-    <Section id="timeline" index="02" title={timeline.sectionTitle} dark>
+    <Section id="timeline" index="02" title={timeline.sectionTitle} dark reveal="fade">
       <div ref={containerRef} className={styles.mapWrap}>
         <TimelineMap containerRef={containerRef} onReach={setReached} />
 
@@ -37,15 +37,16 @@ export function Timeline() {
                       {String(index + 1).padStart(2, '0')}
                     </span>
                     <div>
-                      <h3 className={styles.company}>{stop.company}</h3>
-                      <p className={styles.meta}>{stop.location}</p>
+                      <h3 className={styles.company}>{l(stop.role)}</h3>
+                      <p className={styles.meta}>
+                        {stop.company} · {stop.location}
+                      </p>
                     </div>
                   </header>
 
                   <div className={styles.body}>
                     <div className={styles.text}>
                       <div className={styles.roleHead}>
-                        <h4 className={styles.role}>{l(stop.role)}</h4>
                         <span className={styles.period}>
                           {stop.current && <Tag highlight>{timeline.current}</Tag>} {l(stop.period)}
                         </span>

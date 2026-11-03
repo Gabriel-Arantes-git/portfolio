@@ -21,6 +21,48 @@ export interface Stop {
 
 export const stops: Stop[] = [
   {
+    id: 'tributech-intern',
+    company: 'Tributech Gestão Pública',
+    location: 'Maringá, PR',
+    role: { pt: 'Estágio, Suporte de Dados / TI', en: 'Intern, Data Support / IT' },
+    period: { pt: 'fev/2025 – mai/2025', en: 'Feb 2025 – May 2025' },
+    summary: {
+      pt: [
+        'Relatórios automatizados e integração de dados para análise tributária e informacional.',
+        'Testes de API, documentação de processos e manutenção de funções SQL.',
+      ],
+      en: [
+        'Automated reports and data integration for tax and information analysis.',
+        'API testing, process documentation and SQL function maintenance.',
+      ],
+    },
+    tags: ['SQL', 'MySQL', 'Pentaho', 'API tests'],
+    art: 'reports',
+  },
+  {
+    id: 'tributech-data',
+    company: 'Tributech Gestão Pública',
+    location: 'Maringá, PR',
+    role: { pt: 'Engenheiro de Dados e Desenvolvimento', en: 'Data and Development Engineer' },
+    period: { pt: 'mai/2025 – nov/2025', en: 'May 2025 – Nov 2025' },
+    summary: {
+      pt: [
+        'Java, Spring e React em aplicações e módulos da plataforma.',
+        'Criação e teste de APIs REST para integrar e disponibilizar dados entre sistemas.',
+        'Aplicações que automatizam processos manuais e reduzem retrabalho.',
+        'Bancos de dados e integração entre dialetos SQL, funções robustas de relatório e treinamento de estagiários.',
+      ],
+      en: [
+        'Java, Spring and React in platform applications and modules.',
+        'Building and testing REST APIs to integrate and expose data between systems.',
+        'Applications that automate manual processes and cut rework.',
+        'Databases and integration across SQL dialects, robust report functions and intern training.',
+      ],
+    },
+    tags: ['Java', 'Spring', 'React', 'Node.js', 'SQL', 'MySQL', 'Oracle', 'REST'],
+    art: 'data-flow',
+  },
+  {
     id: 'tributech-fullstack',
     company: 'Tributech Gestão Pública',
     location: 'Maringá, PR',
@@ -44,48 +86,6 @@ export const stops: Stop[] = [
     },
     tags: ['Java', 'Spring Boot', 'Angular TS', 'REST', 'Git/GitLab'],
     art: 'city-map',
-  },
-  {
-    id: 'tributech-data',
-    company: 'Tributech Gestão Pública',
-    location: 'Maringá, PR',
-    role: { pt: 'Engenheiro de Dados e Desenvolvimento', en: 'Data and Development Engineer' },
-    period: { pt: 'mai/2025 – nov/2025', en: 'May 2025 – Nov 2025' },
-    summary: {
-      pt: [
-        'Java, Spring e React em aplicações e módulos da plataforma.',
-        'Criação e teste de APIs REST para integrar e disponibilizar dados entre sistemas.',
-        'Aplicações que automatizam processos manuais e reduzem retrabalho.',
-        'Bancos de dados e integração entre dialetos SQL, funções robustas de relatório e treinamento de estagiários.',
-      ],
-      en: [
-        'Java, Spring and React in platform applications and modules.',
-        'Building and testing REST APIs to integrate and expose data between systems.',
-        'Applications that automate manual processes and cut rework.',
-        'Databases and integration across SQL dialects, robust report functions and intern training.',
-      ],
-    },
-    tags: ['Java', 'Spring', 'React', 'SQL', 'REST'],
-    art: 'data-flow',
-  },
-  {
-    id: 'tributech-intern',
-    company: 'Tributech Gestão Pública',
-    location: 'Maringá, PR',
-    role: { pt: 'Estágio, Suporte de Dados / TI', en: 'Intern, Data Support / IT' },
-    period: { pt: 'fev/2025 – mai/2025', en: 'Feb 2025 – May 2025' },
-    summary: {
-      pt: [
-        'Relatórios automatizados e integração de dados para análise tributária e informacional.',
-        'Testes de API, documentação de processos e manutenção de funções SQL.',
-      ],
-      en: [
-        'Automated reports and data integration for tax and information analysis.',
-        'API testing, process documentation and SQL function maintenance.',
-      ],
-    },
-    tags: ['SQL', 'Pentaho', 'API tests'],
-    art: 'reports',
   },
   {
     id: 'axion',
