@@ -116,4 +116,19 @@ describe('modal do projeto: rolagem do fundo', () => {
     const dialog = readFileSync(join(__dirname, 'ProjectDetail.module.scss'), 'utf8');
     expect(dialog).toMatch(/overscroll-behavior:\s*contain/);
   });
+
+  it('o modal nunca rola na horizontal, quebra palavras longas e tem barra de rolagem da identidade visual', () => {
+    const dialog = readFileSync(join(__dirname, 'ProjectDetail.module.scss'), 'utf8');
+    expect(dialog).toMatch(/overflow-x:\s*hidden/);
+    expect(dialog).toMatch(/overflow-wrap:\s*anywhere/);
+    expect(dialog).toMatch(/scrollbar-color:\s*t\.\$ink t\.\$paper/);
+    expect(dialog).toMatch(/::-webkit-scrollbar-thumb/);
+  });
+
+  it('o modal se ajusta ao celular: ocupa a largura da tela, cabe na altura e mantém o botão Fechar à vista', () => {
+    const dialog = readFileSync(join(__dirname, 'ProjectDetail.module.scss'), 'utf8');
+    expect(dialog).toMatch(/width:\s*min\(calc\(100vw - 1\.5rem\), 52rem\)/);
+    expect(dialog).toMatch(/max-height:\s*calc\(100svh - 1\.5rem\)/);
+    expect(dialog).toMatch(/\.header\s*\{[^}]*position:\s*sticky/s);
+  });
 });
