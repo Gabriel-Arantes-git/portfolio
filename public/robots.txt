@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://arantes.switchhub.dev/sitemap.xml

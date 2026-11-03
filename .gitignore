@@ -1,0 +1,7 @@
+# Added by code-review-graph
+.code-review-graph/
+.claude/
+CLAUDE.md
+node_modules/
+dist/
+*.local
