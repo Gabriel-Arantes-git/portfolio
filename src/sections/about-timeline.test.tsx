@@ -113,6 +113,15 @@ describe('Sobre mim', () => {
     expect(body.parentElement).toBe(card.parentElement);
   });
 
+  it('responsivo: cartões flutuantes só saem da foto (offset negativo) a partir de 960 px e empilham entre 768 e 959', () => {
+    const css = readFileSync(join(__dirname, 'About', 'About.module.scss'), 'utf8');
+    const desktop = css.search(/@include m\.up\(t\.\$bp-md\) \{\s*\.chipExchange/);
+    expect(desktop).toBeGreaterThan(0);
+    expect(css.slice(0, desktop)).not.toMatch(/(left|right):\s*-\d/);
+    expect(css).toMatch(/\$floating-chips:\s*'\(min-width: #\{t\.\$bp-sm\}\) and \(max-width: #\{t\.\$bp-tablet - 1px\}\), \(min-width: #\{t\.\$bp-md\}\)'/);
+    expect(css).not.toMatch(/@include m\.up\(t\.\$bp-sm\)/);
+  });
+
   it('a foto principal é colorida: sem filtro de cinza nem sobreposição duotone no CSS', () => {
     const css = readFileSync(join(__dirname, '..', 'components', 'FramedPhoto', 'FramedPhoto.module.scss'), 'utf8');
     expect(css).not.toMatch(/grayscale|mix-blend-mode|sepia/);
@@ -167,11 +176,25 @@ describe('Sobre mim', () => {
   it('cada módulo vira uma conquista numerada e desbloqueada, com atraso escalonado', async () => {
     renderWithLang(<About />);
     await userEvent.click(screen.getByRole('button', { name: /Intercâmbio na FAU/ }));
-    for (const n of ['01', '02', '03']) {
-      expect(screen.getByText(new RegExp(`Módulo ${n} desbloqueado`))).toBeInTheDocument();
+    for (const badge of ['Gestão', 'Negócio', 'Resultado']) {
+      expect(screen.getByText(badge)).toBeInTheDocument();
     }
+    expect(screen.queryByText(/desbloqueado/)).toBeNull();
     const items = [...document.querySelectorAll('ol > li')].filter((li) => li.getAttribute('style')?.includes('--i'));
     expect(items.map((li) => (li as HTMLElement).style.getPropertyValue('--i'))).toEqual(['0', '1', '2']);
+  });
+
+  it('os três cartões da foto e o cartão de objetivos caem em sequência, e a foto não', () => {
+    renderWithLang(<About />);
+    const chips = [...document.querySelectorAll('li[class*="chip"]')] as HTMLElement[];
+    expect(chips.map((chip) => chip.style.getPropertyValue('--i'))).toEqual(['0', '1', '2']);
+    const goals = screen.getByRole('heading', { name: 'Objetivos' }).closest('aside') as HTMLElement;
+    expect(goals.style.getPropertyValue('--i')).toBe('3');
+    const photoFrame = document.querySelector('img')!.closest('figure, div') as HTMLElement;
+    expect(photoFrame.style.getPropertyValue('--i')).toBe('');
+    const css = readFileSync(join(__dirname, 'About', 'About.module.scss'), 'utf8');
+    expect(css).toMatch(/section\[data-revealed\] \.chip,\s*section\[data-revealed\] \.improving/);
+    expect(css).toMatch(/@keyframes fall/);
   });
 
   it('o intercâmbio mostra a ilustração do avião, decorativa', () => {
@@ -219,18 +242,20 @@ describe('Trajetória', () => {
     renderWithLang(<Timeline />);
     const outer = screen.getAllByRole('list')[0];
     expect(outer.tagName).toBe('OL');
-    expect(within(outer).getAllByRole('heading', { level: 4 }).map((h) => h.textContent)).toEqual([
-      'Full Stack Engineer',
-      'Engenheiro de Dados e Desenvolvimento',
+    expect(within(outer).queryAllByRole('heading', { level: 4 }).length).toBe(0);
+    const titles = screen.getAllByRole('heading', { level: 3 }).map((h) => h.textContent);
+    expect(titles).toEqual([
       'Estágio, Suporte de Dados / TI',
+      'Engenheiro de Dados e Desenvolvimento',
+      'Full Stack Engineer',
       'Software Engineer, Full Stack',
     ]);
-    const companies = screen.getAllByRole('heading', { level: 3 }).map((h) => h.textContent);
-    expect(companies).toEqual([
-      'Tributech Gestão Pública',
-      'Tributech Gestão Pública',
-      'Tributech Gestão Pública',
-      'Axion',
+    const lines = [...document.querySelectorAll('ol > li > article header p')].map((p) => p.textContent);
+    expect(lines).toEqual([
+      'Tributech Gestão Pública · Maringá, PR',
+      'Tributech Gestão Pública · Maringá, PR',
+      'Tributech Gestão Pública · Maringá, PR',
+      'Axion · Maringá, PR',
     ]);
 
     expect([...document.querySelectorAll('ol > li > article header > span')].map((n) => n.textContent)).toEqual([
@@ -241,11 +266,11 @@ describe('Trajetória', () => {
     ]);
   });
 
-  it('a Axion mostra só o nome e, no rodapé do cartão, Consultoria Júnior', () => {
+  it('a Axion mostra o cargo no título, Axion antes de Maringá e, no rodapé do cartão, Consultoria Júnior', () => {
     const { container } = renderWithLang(<Timeline />);
-    const title = screen.getByRole('heading', { level: 3, name: 'Axion' });
-    expect(title).toHaveTextContent(/^Axion$/);
+    const title = screen.getByRole('heading', { level: 3, name: 'Software Engineer, Full Stack' });
     const card = title.closest('article')!;
+    expect(card.querySelector('header p')).toHaveTextContent(/^Axion · Maringá, PR$/);
     expect(card.querySelector('footer')).toHaveTextContent('Consultoria Júnior');
     expect(container.textContent).not.toMatch(/Consultoria Júnior de Tecnologia|Unicesumar\)/);
     expect(container.textContent).not.toMatch(/hospital|veterin/i);
@@ -253,11 +278,11 @@ describe('Trajetória', () => {
 
   it('em inglês o rodapé da Axion é Junior Consultancy', () => {
     renderWithLang(<Timeline />, 'en');
-    const card = screen.getByRole('heading', { level: 3, name: 'Axion' }).closest('article')!;
+    const card = screen.getByRole('heading', { level: 3, name: 'Software Engineer, Full Stack' }).closest('article')!;
     expect(card.querySelector('footer')).toHaveTextContent('Junior Consultancy');
   });
 
-  it('a Tributech mostra o tempo total na primeira parada', () => {
+  it('o tempo total da Tributech aparece no cargo mais recente dela', () => {
     renderWithLang(<Timeline />);
     expect(screen.getByText(/1 ano e 10 meses/)).toBeInTheDocument();
     expect(screen.getAllByText('Atual').length).toBe(2);
@@ -266,7 +291,7 @@ describe('Trajetória', () => {
   it('cada parada tem a sua ilustração, todas diferentes: mapa e dados na Tributech, eventos na Axion', () => {
     const { container } = renderWithLang(<Timeline />);
     const arts = [...container.querySelectorAll('svg[data-art]')];
-    expect(arts.map((a) => a.getAttribute('data-art'))).toEqual(['city-map', 'data-flow', 'reports', 'events']);
+    expect(arts.map((a) => a.getAttribute('data-art'))).toEqual(['reports', 'data-flow', 'city-map', 'events']);
     expect(new Set(arts.map((a) => a.innerHTML)).size).toBe(4);
     arts.forEach((a) => expect(a).toHaveAttribute('aria-hidden', 'true'));
   });
