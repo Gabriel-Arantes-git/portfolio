@@ -13,7 +13,7 @@ export function ExchangeArt({ from, to }: ExchangeArtProps) {
   return (
     <svg
       className={styles.art}
-      viewBox="0 0 360 120"
+      viewBox="0 0 376 120"
       role="presentation"
       aria-hidden="true"
       focusable="false"
@@ -30,10 +30,10 @@ export function ExchangeArt({ from, to }: ExchangeArtProps) {
 
       <rect className={styles.city} x="28" y="88" width="16" height="16" />
       <rect className={styles.cityDest} x="316" y="78" width="16" height="16" />
-      <text className={styles.label} x="20" y="116">
+      <text className={styles.label} x="36" y="116" textAnchor="middle">
         {from}
       </text>
-      <text className={styles.label} x="236" y="116">
+      <text className={styles.label} x="324" y="116" textAnchor="middle">
         {to}
       </text>
 

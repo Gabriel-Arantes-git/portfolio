@@ -59,7 +59,7 @@ export function ExchangeBlock() {
                 <li key={module.title} className={styles.module} style={{ '--i': index } as CSSProperties}>
                   <span className={styles.badge}>
                     <span className={styles.star} aria-hidden="true" />
-                    {about.moduleLabel} {String(index + 1).padStart(2, '0')} {about.unlocked}
+                    {l(module.badge)}
                   </span>
                   <h4 className={styles.moduleTitle}>{module.title}</h4>
                   <p>{l(module.description)}</p>
