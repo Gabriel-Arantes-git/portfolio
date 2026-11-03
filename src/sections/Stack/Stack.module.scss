@@ -3,122 +3,811 @@
 
 $ease: cubic-bezier(0.2, 0.8, 0.2, 1);
 
-.label {
+.legend {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem 1.25rem;
+  margin: 0 0 0.9rem;
+}
+
+.key {
   @include m.label;
-  margin-bottom: 1rem;
-  color: t.$plum;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.7rem;
+
+  &::before {
+    content: '';
+    flex: none;
+    width: 1.1rem;
+    height: 1.1rem;
+    border: 3px solid t.$line;
+    background: t.$card;
+  }
+
+  &[data-tier='secondary']::before {
+    border-style: dashed;
+    background: t.$paper;
+  }
+
+  &[data-tier='featured']::before {
+    background: t.$ink;
+    box-shadow: 3px 3px 0 0 t.$signal;
+  }
+
+  &[data-tier='path']::before {
+    background: t.$taupe;
+  }
 }
 
-.primary {
-  display: grid;
-  gap: 1rem;
-  margin: 0 0 clamp(2.5rem, 6vw, 4rem);
-  padding: 0 8px 8px 0;
-  list-style: none;
+.die {
+  width: 1.7rem;
+  height: 1.7rem;
+  margin-left: auto;
+  fill: t.$card;
+  stroke: t.$ink;
+  stroke-width: 2px;
 
-  @include m.up(t.$bp-sm) {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
-
-  @include m.up(t.$bp-md) {
-    grid-template-columns: repeat(3, minmax(0, 1fr));
+  circle {
+    fill: t.$ink;
+    stroke: none;
   }
 }
 
-.big {
-  display: grid;
-  gap: 0.25rem;
-  padding: 1.1rem 1.25rem 1.25rem;
-  @include m.brutal-box(t.$card);
-  transition: transform 0.25s $ease, box-shadow 0.25s $ease;
-
-  &:hover {
-    transform: translate(-4px, -4px) rotate(-0.6deg);
-    box-shadow: 12px 12px 0 0 t.$shadow;
-  }
-
-  &:last-child:nth-child(3n + 2) {
-    @include m.up(t.$bp-md) {
-      grid-column: span 2;
-    }
-  }
+.stage {
+  position: relative;
+  margin: 0;
+  padding: 0 6px 0 0;
+  transition: height 0.46s $ease;
 
   @include m.reduced-motion {
     transition: none;
-
-    &:hover {
-      transform: none;
-    }
   }
 }
 
-.featured {
+.field {
+  position: relative;
+  transition: top 0.46s $ease, opacity 0.3s $ease;
+
+  &[data-dim] {
+    opacity: 0.2;
+    pointer-events: none;
+  }
+}
+
+.frameSvg,
+.trail {
+  position: absolute;
+  top: 0;
+  left: 0;
+  overflow: visible;
+  pointer-events: none;
+}
+
+.frame {
+  fill: none;
+  stroke: t.$ink;
+  stroke-width: 4px;
+}
+
+.frameInner {
+  fill: none;
+  stroke: t.$ink;
+  stroke-width: 2px;
+  stroke-dasharray: 3 7;
+}
+
+.dash {
+  fill: none;
+  stroke: t.$ink;
+  stroke-width: 4px;
+  stroke-linecap: butt;
+  stroke-dasharray: 14 10;
+}
+
+.board {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.cell {
+  position: absolute;
+
+  &:hover,
+  &:focus-within {
+    z-index: 6;
+  }
+}
+
+.stone {
+  position: relative;
+  display: grid;
+  align-content: end;
+  gap: 0.15rem;
+  width: 100%;
+  height: 100%;
+  min-width: 0;
+  padding: 1.2rem 0.6rem 0.6rem;
+  overflow: hidden;
+  border: 3px solid t.$line;
+  background: t.$card;
+  color: t.$ink;
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+  @include m.hard-shadow(t.$shadow, 6px);
+  transition: transform 0.2s $ease, box-shadow 0.2s $ease, background-color 0.2s $ease;
+
+  &:focus-visible {
+    @include m.focus-ring;
+  }
+}
+
+.primary:hover .stone,
+.primary:focus-within .stone,
+.primary[data-active] .stone {
+  transform: translate(-3px, -3px);
+  box-shadow: 9px 9px 0 0 t.$shadow;
+}
+
+.secondary {
+  .stone {
+    border-style: dashed;
+    background: t.$paper;
+    box-shadow: none;
+  }
+
+  .name {
+    font-size: max(0.78rem, calc(var(--half, 56px) * 0.3));
+  }
+
+  &:hover .stone,
+  &:focus-within .stone,
+  &[data-active] .stone {
+    border-style: solid;
+    background: t.$card;
+    transform: translate(-2px, -2px);
+  }
+}
+
+.path {
+  .stone {
+    border-color: t.$ink;
+    background: t.$taupe;
+    color: t.$ink;
+    @include m.hard-shadow(t.$ink, 6px);
+  }
+
+  .kind,
+  .number {
+    color: t.$ink;
+  }
+
+  &:hover .stone,
+  &:focus-within .stone,
+  &[data-active] .stone {
+    transform: translate(-3px, -3px);
+    box-shadow: 9px 9px 0 0 t.$ink;
+  }
+}
+
+.featured .stone {
   background: t.$ink;
   color: t.$paper;
   border-color: t.$ink;
-  @include m.hard-shadow(t.$signal);
+  @include m.hard-shadow(t.$signal, 6px);
 
-  &:hover {
-    box-shadow: 12px 12px 0 0 t.$signal;
-  }
-
-  .kind {
+  .kind,
+  .number {
     color: t.$muted-dark;
   }
 }
 
+.featured:hover .stone,
+.featured:focus-within .stone,
+.featured[data-active] .stone {
+  box-shadow: 9px 9px 0 0 t.$signal;
+}
+
+.number {
+  position: absolute;
+  top: 0.35rem;
+  left: 0.5rem;
+  @include m.label;
+  font-size: 0.62rem;
+  color: t.$plum;
+}
+
 .kind {
   @include m.label;
-  font-size: 0.72rem;
+  font-size: 0.6rem;
   color: t.$plum;
 }
 
 .name {
   font-family: t.$font-display;
-  font-size: clamp(2.2rem, 5vw, 3.4rem);
+  font-size: max(0.8rem, calc(var(--half, 56px) * 0.34));
   font-weight: 400;
   line-height: 1;
   text-transform: uppercase;
+  overflow-wrap: break-word;
 }
 
 .detail {
   @include m.label;
-  font-size: 0.8rem;
+  font-size: 0.5rem;
+  line-height: 1.25;
 }
 
-.secondary {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.75rem;
-  margin: 0;
-  padding: 0 6px 6px 0;
-  list-style: none;
-}
+$link: 1.6rem;
 
-.chip {
-  display: block;
-  padding: 0.6rem 1.05rem;
-  border: 3px solid t.$line;
+.bubble {
+  position: absolute;
+  z-index: 8;
+  top: calc(100% + #{$link});
+  left: 50%;
+  display: grid;
+  gap: 0.4rem;
+  width: min(15rem, 80vw);
+  padding: 0.9rem 1rem 1rem;
+  border: t.$border solid t.$line;
   background: t.$card;
   color: t.$ink;
-  font-family: t.$font-mono;
-  font-size: 1rem;
-  font-weight: 700;
-  letter-spacing: 0.04em;
-  @include m.hard-shadow(t.$shadow, 4px);
-  transition: transform 0.2s $ease, box-shadow 0.2s $ease, background-color 0.2s $ease;
+  @include m.hard-shadow(t.$signal, 6px);
+  pointer-events: none;
+  transform: translate(-50%, 8px);
+  visibility: hidden;
+  opacity: 0;
+  transition: opacity 0.18s $ease, transform 0.18s $ease, visibility 0s linear 0.18s;
 
-  &:hover {
-    transform: translate(-3px, -3px);
-    box-shadow: 7px 7px 0 0 t.$shadow;
-    background: t.$signal;
+  &::before {
+    content: '';
+    position: absolute;
+    bottom: 100%;
+    left: 50%;
+    width: 0;
+    height: $link;
+    margin-left: -2px;
+    border-left: 4px dotted t.$ink;
   }
 
   @include m.reduced-motion {
     transition: none;
+  }
+}
 
-    &:hover {
-      transform: none;
+.cell[data-edge='start'] > .bubble {
+  left: 0;
+  transform: translate(0, 8px);
+
+  &::before {
+    left: var(--half);
+  }
+}
+
+.cell[data-edge='end'] > .bubble {
+  right: 0;
+  left: auto;
+  transform: translate(0, 8px);
+
+  &::before {
+    right: var(--half);
+    left: auto;
+    margin-right: -2px;
+    margin-left: 0;
+  }
+}
+
+.cell[data-up] > .bubble {
+  top: auto;
+  bottom: calc(100% + #{$link});
+
+  &::before {
+    top: 100%;
+    bottom: auto;
+  }
+}
+
+.stone:focus-visible ~ .bubble {
+  visibility: visible;
+  opacity: 1;
+  transform: translate(-50%, 0);
+  transition-delay: 0s;
+}
+
+.cell[data-edge='start'] > .stone:focus-visible ~ .bubble,
+.cell[data-edge='end'] > .stone:focus-visible ~ .bubble {
+  transform: translate(0, 0);
+}
+
+@media (hover: hover) {
+  .cell:hover > .bubble {
+    visibility: visible;
+    opacity: 1;
+    transform: translate(-50%, 0);
+    transition-delay: 0s;
+  }
+
+  .cell[data-edge='start']:hover > .bubble,
+  .cell[data-edge='end']:hover > .bubble {
+    transform: translate(0, 0);
+  }
+}
+
+.popKind {
+  @include m.label;
+  margin: 0;
+  font-size: 0.66rem;
+  color: t.$plum;
+}
+
+.popName {
+  @include m.display-title(1.8rem);
+  margin: 0;
+}
+
+.popText {
+  margin: 0;
+  font-size: 0.88rem;
+}
+
+.chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  margin: 0;
+}
+
+.chip {
+  @include m.label;
+  padding: 0.2rem 0.5rem;
+  background: t.$ink;
+  color: t.$paper;
+  font-size: 0.66rem;
+}
+
+.more {
+  @include m.label;
+  margin: 0.2rem 0 0;
+  padding-top: 0.5rem;
+  border-top: 3px dashed t.$line;
+  color: t.$plum;
+}
+
+.now {
+  .piece {
+    display: grid;
+    justify-items: center;
+    gap: 0.2rem;
+    width: 100%;
+    height: 100%;
+    padding: 0;
+    border: 0;
+    background: transparent;
+    color: t.$ink;
+    font: inherit;
+    cursor: pointer;
+
+    &:focus-visible {
+      outline: none;
     }
   }
+
+  .pawnIcon {
+    width: 62%;
+    transition: transform 0.2s $ease;
+  }
+
+  .pawnIcon {
+    transition: stroke 0.18s $ease, stroke-width 0.18s $ease;
+  }
+
+  .piece:hover .pawnIcon,
+  .piece:focus-visible .pawnIcon {
+    stroke: t.$signal;
+    stroke-width: 5px;
+  }
+
+  .pieceName {
+    padding: 0.15rem 0.45rem;
+    background: t.$ink;
+    color: t.$paper;
+    font-family: t.$font-mono;
+    font-size: 0.62rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+}
+
+.pawnIcon {
+  display: block;
+  width: 38%;
+  height: auto;
+  margin: 0 auto 0.15rem;
+  fill: t.$ink;
+  stroke: t.$paper;
+  stroke-width: 2px;
+  paint-order: stroke;
+  animation: bob 1.8s ease-in-out infinite;
+
+  @include m.reduced-motion {
+    animation: none;
+  }
+}
+
+@keyframes bob {
+  50% {
+    transform: translateY(-5px);
+  }
+}
+
+.panel {
+  position: absolute;
+  z-index: 20;
+  top: 0;
+  right: 8px;
+  left: 0;
+  display: flex;
+  flex-direction: column;
+  max-height: 85svh;
+  border: t.$border solid t.$line;
+  background: t.$card;
+  color: t.$ink;
+  overflow-x: hidden;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  scrollbar-width: thin;
+  scrollbar-color: t.$ink t.$paper;
+  @include m.hard-shadow(t.$signal, 8px);
+
+  &::-webkit-scrollbar {
+    width: 14px;
+  }
+
+  &::-webkit-scrollbar-track {
+    border-left: 3px solid t.$line;
+    background: t.$paper;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    border: 3px solid t.$paper;
+    background: t.$ink;
+  }
+
+  &::-webkit-scrollbar-thumb:hover {
+    background: t.$signal;
+  }
+  animation: panel-in 0.42s $ease both;
+
+  .stage[data-wide] & {
+    left: auto;
+    width: 352px;
+    height: calc(100% - 8px);
+    max-height: none;
+  }
+
+  .stage:not([data-wide]) & {
+    position: fixed;
+    top: 5.5rem;
+    right: 0.75rem;
+    bottom: 0.75rem;
+    left: 0.75rem;
+    max-height: none;
+  }
+
+  @include m.reduced-motion {
+    animation: none;
+  }
+}
+
+.closing {
+  animation: panel-out 0.28s $ease both;
+
+  @include m.reduced-motion {
+    animation: none;
+  }
+}
+
+@keyframes panel-in {
+  from {
+    opacity: 0;
+    transform: translate3d(2.5rem, 0, 0);
+  }
+}
+
+@keyframes panel-out {
+  to {
+    opacity: 0;
+    transform: translate3d(2.5rem, 0, 0);
+  }
+}
+
+.bar {
+  position: sticky;
+  top: 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 0.6rem 1rem;
+  border-bottom: t.$border solid t.$line;
+  background: t.$ink;
+  color: t.$paper;
+}
+
+.barTitle {
+  @include m.label;
+}
+
+.panelBody {
+  min-width: 0;
+  overflow-wrap: anywhere;
+  display: grid;
+  align-content: start;
+  gap: 0.6rem;
+  padding: 1.25rem 1.25rem 2rem;
+}
+
+.panelKind {
+  @include m.label;
+  margin: 0;
+  color: t.$plum;
+}
+
+.panelTitle {
+  @include m.display-title(clamp(2.2rem, 6vw, 3.2rem));
+  margin: 0;
+}
+
+.panelDetail {
+  @include m.label;
+  margin: 0;
+  font-size: 0.78rem;
+}
+
+.section {
+  display: grid;
+  gap: 0.6rem;
+  margin-top: 0.5rem;
+  padding-top: 0.75rem;
+  border-top: 3px dashed t.$line;
+}
+
+.sectionHeading {
+  @include m.label;
+  margin: 0;
+  color: t.$plum;
+}
+
+.sectionText {
+  margin: 0;
+  font-size: 0.95rem;
+}
+
+.items {
+  display: grid;
+  gap: 0.6rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+
+  li {
+    display: grid;
+    gap: 0.15rem;
+    min-width: 0;
+    overflow-wrap: anywhere;
+    padding: 0.6rem 0.8rem;
+    border: 3px solid t.$line;
+    background: t.$paper;
+    font-size: 0.92rem;
+  }
+}
+
+.scenery {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.prop {
+  position: absolute;
+  transition: left 0.46s $ease, top 0.46s $ease;
+
+  svg {
+    display: block;
+    width: 100%;
+    height: 100%;
+    stroke: t.$ink;
+    stroke-width: 2.4px;
+    stroke-linejoin: miter;
+  }
+
+  @include m.reduced-motion {
+    transition: none;
+  }
+}
+
+.trunk {
+  fill: t.$plum;
+}
+
+.leaf {
+  fill: t.$card;
+}
+
+.rock {
+  fill: t.$taupe;
+}
+
+.pennant {
+  fill: t.$signal;
+}
+
+.walked {
+  fill: none;
+  stroke: t.$signal;
+  stroke-width: 7px;
+  stroke-linecap: square;
+  stroke-dasharray: var(--f, 1) 2;
+  stroke-dashoffset: var(--f, 1);
+  animation: walk 0.9s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+
+  @include m.reduced-motion {
+    animation: none;
+    stroke-dashoffset: 0;
+  }
+}
+
+@keyframes walk {
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+.cell[data-walked] > .stone {
+  outline: 3px solid t.$signal;
+  outline-offset: 3px;
+  animation: lit 0.35s ease-out both;
+  animation-delay: calc(var(--walk, 0) * 0.9s);
+
+  @include m.reduced-motion {
+    animation: none;
+  }
+}
+
+@keyframes lit {
+  from {
+    outline-color: transparent;
+  }
+}
+
+.banner {
+  @include m.display-title(clamp(1.6rem, 4vw, 2.2rem));
+  margin: 0.75rem 0 0;
+  padding: 1rem;
+  border: 3px dashed t.$line;
+  text-align: center;
+  color: t.$signal;
+}
+
+.snakeMask {
+  fill: none;
+  stroke: t.$card;
+  stroke-width: 70px;
+  stroke-dasharray: 1 2;
+  stroke-dashoffset: 0;
+}
+
+.field[data-intro='wait'] {
+  .snakeMask {
+    stroke-dashoffset: 1;
+  }
+
+  .cell,
+  .scenery {
+    opacity: 0;
+  }
+}
+
+.field[data-intro='play'] {
+  .snakeMask {
+    animation: snake-draw 1.7s linear both;
+  }
+
+  .cell {
+    animation: slither 0.8s cubic-bezier(0.2, 0.8, 0.2, 1) both;
+    animation-delay: calc(var(--i, 0) * 70ms);
+  }
+
+  .prop {
+    animation: prop-drop 0.85s both;
+    animation-delay: calc(0.9s + var(--k, 0) * 0.16s);
+  }
+
+  @include m.reduced-motion {
+    .snakeMask,
+    .cell,
+    .prop {
+      animation: none;
+    }
+  }
+}
+
+@keyframes snake-draw {
+  from {
+    stroke-dashoffset: 1;
+  }
+
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+@keyframes slither {
+  0% {
+    opacity: 0;
+    transform: translate(-30px, 16px) rotate(-10deg) scale(0.4);
+  }
+
+  55% {
+    opacity: 1;
+    transform: translate(6px, -6px) rotate(3deg) scale(1.06);
+  }
+
+  100% {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes prop-drop {
+  0% {
+    opacity: 0;
+    transform: translateY(-420%) rotate(-5deg);
+    animation-timing-function: cubic-bezier(0.5, 0, 0.9, 0.5);
+  }
+
+  10% {
+    opacity: 1;
+  }
+
+  55% {
+    transform: translateY(8%) rotate(1.5deg);
+    animation-timing-function: ease-out;
+  }
+
+  72% {
+    transform: translateY(-4%) rotate(-0.6deg);
+    animation-timing-function: ease-in;
+  }
+
+  88% {
+    transform: translateY(1%) rotate(0.2deg);
+  }
+
+  100% {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+.screen {
+  fill: t.$ink;
+}
+
+.glyph {
+  fill: none;
+  stroke: t.$paper;
+  stroke-width: 2.6px;
+  stroke-linecap: square;
+}
+
+.glyphLine {
+  fill: none;
+  stroke: t.$ink;
+  stroke-width: 2.6px;
+  stroke-linecap: square;
 }
