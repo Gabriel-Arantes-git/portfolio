@@ -9,6 +9,14 @@
   border-top: t.$border solid t.$line;
 }
 
+.compact {
+  padding-block: clamp(1.25rem, 2.5vw, 2rem);
+
+  .header {
+    margin-bottom: 1rem;
+  }
+}
+
 .dark {
   background: t.$ink;
   color: t.$paper;
@@ -48,4 +56,81 @@
   @include m.display-title(clamp(2rem, 6vw, 4rem));
 
   line-height: 1.1;
+}
+
+$rise: cubic-bezier(0.2, 0.8, 0.2, 1);
+
+@media (prefers-reduced-motion: no-preference) {
+  .pending .inner > * {
+    opacity: 0;
+  }
+
+  .revealed .inner > * {
+    animation: rise 0.75s $rise backwards;
+  }
+
+  .revealed.fade .inner > * {
+    animation: fade 0.7s ease-out backwards;
+  }
+
+  .revealed.drop .inner > * {
+    animation: settle 0.9s backwards;
+  }
+
+  @for $n from 1 through 6 {
+    .revealed .inner > :nth-child(#{$n}) {
+      animation-delay: #{($n - 1) * 110}ms;
+    }
+  }
+
+  .revealed .header .index {
+    animation: stamp 0.6s $rise 0.15s backwards;
+  }
+}
+
+@keyframes rise {
+  from {
+    opacity: 0;
+    transform: translate3d(0, 28px, 0);
+  }
+}
+
+@keyframes fade {
+  from {
+    opacity: 0;
+  }
+}
+
+@keyframes stamp {
+  from {
+    opacity: 0;
+    transform: translate3d(-14px, 0, 0) scale(1.6);
+  }
+}
+
+@keyframes settle {
+  0% {
+    opacity: 0;
+    transform: translate3d(0, -56px, 0) rotate(-0.6deg);
+    animation-timing-function: cubic-bezier(0.5, 0, 0.9, 0.5);
+  }
+
+  12% {
+    opacity: 1;
+  }
+
+  58% {
+    transform: translate3d(0, 6px, 0) rotate(0.3deg);
+    animation-timing-function: ease-out;
+  }
+
+  78% {
+    transform: translate3d(0, -3px, 0);
+    animation-timing-function: ease-in;
+  }
+
+  100% {
+    opacity: 1;
+    transform: none;
+  }
 }

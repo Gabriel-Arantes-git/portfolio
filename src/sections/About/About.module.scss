@@ -3,6 +3,8 @@
 
 $ease: cubic-bezier(0.2, 0.8, 0.2, 1);
 
+$floating-chips: '(min-width: #{t.$bp-sm}) and (max-width: #{t.$bp-tablet - 1px}), (min-width: #{t.$bp-md})';
+
 .mark {
   padding: 0 0.15em;
   background: t.$signal;
@@ -13,10 +15,10 @@ $ease: cubic-bezier(0.2, 0.8, 0.2, 1);
   display: grid;
   gap: clamp(2rem, 5vw, 3rem);
 
-  @include m.up(t.$bp-md) {
+  @include m.up(t.$bp-tablet) {
     grid-template-columns: minmax(0, 5fr) minmax(0, 6fr);
     align-items: center;
-    gap: clamp(3rem, 6vw, 5rem);
+    gap: clamp(1.75rem, 5vw, 5rem);
   }
 }
 
@@ -36,7 +38,7 @@ $ease: cubic-bezier(0.2, 0.8, 0.2, 1);
   padding: 0;
   list-style: none;
 
-  @include m.up(t.$bp-sm) {
+  @media #{$floating-chips} {
     display: block;
     margin: 0;
   }
@@ -60,10 +62,10 @@ $ease: cubic-bezier(0.2, 0.8, 0.2, 1);
     text-transform: uppercase;
   }
 
-  @include m.up(t.$bp-sm) {
+  @media #{$floating-chips} {
     position: absolute;
     width: max-content;
-    max-width: 18rem;
+    max-width: 88%;
     transform: translate(calc(var(--px) * var(--kx)), calc(var(--py) * var(--ky))) rotate(var(--rot));
     transition: transform 0.3s $ease;
 
@@ -83,13 +85,13 @@ $ease: cubic-bezier(0.2, 0.8, 0.2, 1);
   color: t.$plum;
 }
 
-@include m.up(t.$bp-sm) {
+@media #{$floating-chips} {
   .chipExchange {
     --kx: 16px;
     --ky: -10px;
     --rot: 2deg;
     top: 6%;
-    right: -12%;
+    right: 0;
   }
 
   .chipFocus {
@@ -97,14 +99,14 @@ $ease: cubic-bezier(0.2, 0.8, 0.2, 1);
     --ky: 12px;
     --rot: -2deg;
     bottom: 22%;
-    left: -10%;
+    left: 0;
   }
 
   .chipStack {
     --kx: 20px;
     --ky: 14px;
     --rot: 0deg;
-    right: -8%;
+    right: 0;
     bottom: 4%;
     background: t.$ink;
     color: t.$paper;
@@ -113,6 +115,20 @@ $ease: cubic-bezier(0.2, 0.8, 0.2, 1);
     .chipLabel {
       color: t.$muted-dark;
     }
+  }
+}
+
+@include m.up(t.$bp-md) {
+  .chipExchange {
+    right: -12%;
+  }
+
+  .chipFocus {
+    left: -8%;
+  }
+
+  .chipStack {
+    right: -8%;
   }
 }
 
@@ -192,5 +208,39 @@ $ease: cubic-bezier(0.2, 0.8, 0.2, 1);
         transform: none;
       }
     }
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  section[data-revealed] .chip,
+  section[data-revealed] .improving {
+    animation: fall 0.9s both;
+    animation-delay: calc(0.55s + var(--i, 0) * 0.2s);
+  }
+}
+
+@keyframes fall {
+  0% {
+    opacity: 0;
+    translate: 0 -260%;
+    animation-timing-function: cubic-bezier(0.5, 0, 0.9, 0.5);
+  }
+
+  10% {
+    opacity: 1;
+  }
+
+  55% {
+    translate: 0 6%;
+    animation-timing-function: ease-out;
+  }
+
+  72% {
+    translate: 0 -3%;
+    animation-timing-function: ease-in;
+  }
+
+  88% {
+    translate: 0 1%;
   }
 }

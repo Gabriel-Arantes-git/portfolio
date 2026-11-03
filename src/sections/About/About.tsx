@@ -1,4 +1,4 @@
-import { useRef } from 'react';
+import { useRef, type CSSProperties } from 'react';
 import { FramedPhoto } from '@/components/FramedPhoto/FramedPhoto';
 import { Section } from '@/components/Section/Section';
 import photo from '@/assets/gabriel.jpg';
@@ -30,15 +30,15 @@ export function About() {
         <div ref={parallaxRef} className={styles.photoWrap}>
           <FramedPhoto src={photo} alt={about.photoAlt} />
           <ul className={styles.floating}>
-            <li className={`${styles.chip} ${styles.chipExchange}`}>
+            <li className={`${styles.chip} ${styles.chipExchange}`} style={{ '--i': 0 } as CSSProperties}>
               <span className={styles.chipLabel}>{about.cardExchangeLabel}</span>
               <strong>{about.cardExchangeValue}</strong>
             </li>
-            <li className={`${styles.chip} ${styles.chipFocus}`}>
+            <li className={`${styles.chip} ${styles.chipFocus}`} style={{ '--i': 1 } as CSSProperties}>
               <span className={styles.chipLabel}>{about.cardFocusLabel}</span>
               <strong>{about.cardFocusValue}</strong>
             </li>
-            <li className={`${styles.chip} ${styles.chipStack}`}>
+            <li className={`${styles.chip} ${styles.chipStack}`} style={{ '--i': 2 } as CSSProperties}>
               <span className={styles.chipLabel}>{about.cardStackLabel}</span>
               <strong>{about.cardStackValue}</strong>
             </li>
@@ -48,7 +48,7 @@ export function About() {
         <div className={styles.copy}>
           <p className={styles.body}>{about.body}</p>
 
-          <aside className={styles.improving} aria-labelledby="improving-title">
+          <aside className={styles.improving} aria-labelledby="improving-title" style={{ '--i': 3 } as CSSProperties}>
             <h3 id="improving-title" className={styles.improvingTitle}>
               {about.improvingTitle}
             </h3>
