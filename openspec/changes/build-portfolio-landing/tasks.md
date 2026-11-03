@@ -34,7 +34,7 @@
 - [x] 5.1 Criar `data/projects.ts` com Raposa, pgfathom, vault (sem link), I COUNI, WorkInTech, Hospital Veterinário, gestão de eventos e Tributech, textos {pt,en}, links reais de COUNI e WorkInTech e crédito de co-autoria; verificar que o tipo exige os dois idiomas e que nenhum link aponta para o repositório privado
 - [x] 5.2 Implementar `Projects` com seletor de escopos, animação de entrada/saída e navegação por teclado; verificar por teste a troca de escopo e o escopo inicial Próprios
 - [x] 5.3 Implementar o detalhe do projeto em `dialog` com foco gerenciado; verificar abertura, fechamento por Esc e o conteúdo do I COUNI
-- [x] 5.4 Implementar `Stack` em dois níveis (destaque e secundária com Kafka, Docker, Kubernetes e Oracle do currículo); verificar a diferença de tamanho entre os níveis
+- [x] 5.4 Implementar `Stack` em dois níveis (destaque e secundária com Docker, Kubernetes e Oracle do currículo); verificar a diferença de tamanho entre os níveis
 - [x] 5.5 Implementar `Contact` com LinkedIn e GitHub diretos, e e-mail e WhatsApp revelados por clique (`data/contact.ts` codificado e `utils/contact.ts`); verificar por teste unitário a montagem e por teste de build que o build não contém `arantes.gabriel21`, nenhum padrão de e-mail nem os dígitos do telefone em forma legível (o nome "Arantes" e as URLs de LinkedIn e GitHub continuam públicos)
 
 ## 6. Fechamento
@@ -83,3 +83,17 @@
 - [x] 12.6 Implementar reprovar registro ao clicar (X, contador de reprovados, tremida e queda reta) na simulação e no desenho; verificar por testes unitários e no navegador
 - [x] 12.7 Rodar contraste, build e testes e atualizar o README; verificar tudo verde
 
+## 13. Refinamentos: responsividade, fichas de projeto e modal
+
+- [x] 13.1 Corrigir a responsividade: cartões flutuantes do Sobre mim sem sair da tela entre 640 e 900 px, duas colunas na tablet (768 px) em Sobre mim e Projetos; verificar por varredura de 320 a 2560 px sem elemento fora da tela e por teste de regressão
+- [x] 13.2 Redesenhar o cartão de projeto como ficha (faixa superior, selo, nome, tópicos, bloco tracejado e rodapé) com dados em `data/projects.ts`; verificar por teste de conteúdo (sem estrelas inventadas) e no navegador
+- [x] 13.3 Travar a rolagem da página enquanto o modal do projeto estiver aberto, sem deslocar o layout; verificar por teste e no navegador
+
+
+## 14. Ajustes de projetos e Stack em tabuleiro
+
+- [x] 14.1 Acelerar a troca de escopo dos projetos (transição curta, só transform/opacity, sem espera dupla)
+- [x] 14.2 Adicionar ao escopo Profissional os cartões "Integrador geral" e "Gestão de métricas" (sem nomes de clientes, URLs internas ou segredos)
+- [x] 14.3 Stack como tabuleiro em caminho curvo sem chegada, em uma tela no desktop: ordem Faculdade → Estágio → PostgreSQL → MySQL → Dados → Node.js → React → Docker → Full Stack → Java → Angular → Go → Kubernetes → AWS → Oracle → MongoDB → RabbitMQ → IA → Axion → Atualmente (peão com a etiqueta, sem quadrado, ficha "EM DESENVOLVIMENTO"); sem fundo quadriculado, com imagens decorativas; ao abrir uma casa o caminho percorrido até ela é destacado; legenda uso no dia a dia / atua com projetos com / mais experiência / trajetória
+- [x] 14.4 Animações leves ao rolar: cada seção aparece ao entrar na tela (subida suave, queda com leve quique em Projetos e Contato, só fade na Trajetória e Stack); a Stack monta o tabuleiro em cobrinha (trilha se desenha e as casas surgem em sequência até o peão); RabbitMQ e Oracle passam a "uso no dia a dia"; o trecho vermelho percorrido usa a mesma curva da trilha tracejada e a cobre
+- [x] 14.5 Trajetória em ordem cronológica (do mais antigo ao atual) com o cargo como título e "empresa · cidade" abaixo; imagens do tabuleiro caem com a queda do intercâmbio, sem a faixa marrom e com referências a código; cartões da seção Sobre (exceto a foto) caem ao entrar; cartão de projeto inteiro clicável e botão Ver detalhes com hover; origens da stack ajustadas (curso = faculdade quando não é uma das certificações)

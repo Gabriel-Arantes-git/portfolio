@@ -14,7 +14,7 @@ Gabriel Arantes não tem um portfólio público que reúna trajetória, projetos
 - **Sobre mim**: foto em moldura recortada com tratamento duotone na paleta, cartões flutuantes sobrepostos (intercâmbio FAU, foco atual, stack) e título com palavra em destaque, inspirado no print de referência. Inclui o resumo do intercâmbio *Innovation Management in the Digital Economy* (1 mês, 3 módulos) e as duas recomendações do LinkedIn.
 - **Trajetória**: lista numerada com Tributech Gestão Pública (3 cargos), Axion Consultoria Jr. e Liga Acadêmica.
 - **Projetos**: navegação por escopo, com transição animada entre os grupos: *Próprios* (Raposa, pgfathom, vault do ecossistema), *Consultoria Jr.* (I COUNI, WorkInTech, Hospital Veterinário, gestão de eventos) e *Profissional* (Tributech). Links reais: `counicesumar.com.br` e `workintech.com.br`.
-- **Stack** com destaque para Java/Spring, PostgreSQL, Node, Angular e React, e grupo secundário (Go, AWS, RabbitMQ, Kafka, Docker, Kubernetes, MySQL, Oracle, MongoDB).
+- **Stack** com destaque para Java/Spring, PostgreSQL, Node, Angular e React, e grupo secundário (Go, AWS, RabbitMQ, Docker, Kubernetes, MySQL, Oracle, MongoDB).
 - **Contato**: LinkedIn e GitHub como links diretos; e-mail e WhatsApp só aparecem após clique, para não serem raspados por robôs.
 - Entrega da paleta final (valores hex e papéis) ao dono, conforme pedido.
 

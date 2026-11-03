@@ -49,6 +49,28 @@ Ao ativar um cartão, o site SHALL abrir um detalhe com descrição ampliada, de
 - **WHEN** o visitante ativa o cartão do WorkInTech
 - **THEN** vê o propósito de conectar alunos a profissionais, a participação em refatoração de front e back, e os recursos de certificados, gestão de usuários e banca avaliativa
 
+### Requirement: Cartão em formato de ficha
+Cada cartão de projeto SHALL ter o formato de uma ficha com moldura grossa e sombra dura: uma faixa superior com a categoria do projeto e, à direita, uma informação curta (ou o crédito de co-autoria) e um selo com a tecnologia principal; o nome em destaque; a descrição curta; até três tópicos; um bloco tracejado com um trecho ilustrativo (diff, terminal ou lista de entregas); e um rodapé com as tecnologias e a ação "Ver detalhes". O cartão MUST NOT exibir números inventados, como estrelas ou datas de push.
+
+#### Scenario: Ficha completa
+- **WHEN** o cartão do Raposa é exibido
+- **THEN** mostra a categoria "Revisão de código", o selo "GO", o nome, três tópicos, o trecho de diff com a linha `InsecureSkipVerify: true` destacada e o rodapé com tecnologias e "Ver detalhes"
+
+#### Scenario: Sem dados inventados
+- **WHEN** qualquer cartão é exibido
+- **THEN** não há "★" nem contagem de estrelas
+
+### Requirement: Rolagem do fundo travada com o modal aberto
+Enquanto o detalhe do projeto estiver aberto, a página atrás dele MUST NOT rolar (roda do mouse, toque ou teclado), sem deslocar o layout, e SHALL voltar a rolar ao fechar o detalhe, na mesma posição.
+
+#### Scenario: Abrir o detalhe
+- **WHEN** o visitante abre o detalhe de um projeto e tenta rolar a página
+- **THEN** a página atrás não se move; só o conteúdo do modal rola, se for maior que a tela
+
+#### Scenario: Fechar o detalhe
+- **WHEN** o detalhe é fechado por botão, Esc ou clique no fundo
+- **THEN** a rolagem da página volta ao normal, na posição em que estava
+
 ### Requirement: Acessibilidade e movimento
 Os escopos SHALL ser operáveis por teclado com estado ativo indicado, e as animações SHALL ser desativadas com movimento reduzido.
 
