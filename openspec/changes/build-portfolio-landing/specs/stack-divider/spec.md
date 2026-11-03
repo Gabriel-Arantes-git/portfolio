@@ -14,7 +14,7 @@ Uma faixa levemente inclinada SHALL ocupar toda a largura e estar integralmente 
 - **THEN** a faixa aparece completa, de borda a borda, sem ser cortada pela dobra
 
 ### Requirement: Tecnologias passando na faixa
-A faixa SHALL exibir, em loop contínuo, os nomes das tecnologias da stack (Java, Spring Boot, Angular, React, Node.js, PostgreSQL, IA, Go, AWS, RabbitMQ, Kafka, Docker, Kubernetes, MySQL, Oracle e MongoDB) e MUST NOT repetir apenas a palavra "Stack".
+A faixa SHALL exibir, em loop contínuo, os nomes das tecnologias da stack (Java, Spring Boot, Angular, React, Node.js, PostgreSQL, IA, Go, AWS, RabbitMQ, Docker, Kubernetes, MySQL, Oracle e MongoDB) e MUST NOT repetir apenas a palavra "Stack".
 
 #### Scenario: Conteúdo da faixa
 - **WHEN** a faixa está visível

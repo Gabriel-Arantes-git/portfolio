@@ -16,7 +16,7 @@ export function Projects() {
   const [open, setOpen] = useState<Project | null>(null);
 
   return (
-    <Section id="projects" index="03" title={tp.sectionTitle}>
+    <Section id="projects" index="03" title={tp.sectionTitle} reveal="drop">
       <ScopeTabs active={active} onSelect={select} />
 
       <div

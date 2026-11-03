@@ -16,7 +16,7 @@ export function useSwitchTransition<T>(
   initial: T,
   order: readonly T[],
   reducedMotion: boolean,
-  duration = 240,
+  duration = 140,
 ): SwitchTransition<T> {
   const [active, setActive] = useState<T>(initial);
   const [shown, setShown] = useState<T>(initial);
@@ -52,7 +52,7 @@ export function useSwitchTransition<T>(
         window.setTimeout(() => {
           setShown(next);
           setPhase('in');
-          timers.current.push(window.setTimeout(() => setPhase('idle'), duration));
+          timers.current.push(window.setTimeout(() => setPhase('idle'), duration + 150));
         }, duration),
       );
     },

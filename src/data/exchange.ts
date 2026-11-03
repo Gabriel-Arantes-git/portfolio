@@ -2,6 +2,7 @@ import type { Localized } from '@/i18n/types';
 
 export interface ExchangeModule {
   title: string;
+  badge: Localized;
   description: Localized;
 }
 
@@ -25,6 +26,7 @@ export const exchange = {
   modules: [
     {
       title: 'Managing Innovation Ecosystems',
+      badge: { pt: 'Gestão', en: 'Management' },
       description: {
         pt: 'Formação de equipes para organizações disruptivas; alianças, parcerias e modelos de cooperação para o mundo digital; visitas a empresas e casos de negócio.',
         en: 'Team building for disruptive organizations; alliances, partnerships, and cooperation models for the digital world; company visits and business cases.',
@@ -32,6 +34,7 @@ export const exchange = {
     },
     {
       title: 'Rethinking organizational models',
+      badge: { pt: 'Negócio', en: 'Business' },
       description: {
         pt: 'Transformação digital, startups e a nova economia; comunicação e distribuição na era das redes sociais; visitas a empresas e casos de negócio.',
         en: 'Digital transformation, startups, and the new economy; communication and distribution in the social media era; company visits and business cases.',
@@ -39,6 +42,7 @@ export const exchange = {
     },
     {
       title: 'Agile techniques',
+      badge: { pt: 'Resultado', en: 'Result' },
       description: {
         pt: 'Criação de valor para o novo consumidor; exploração de opções e desenvolvimento de soluções em movimento; casos de negócio.',
         en: 'Creating value for the new consumer; exploring options and developing solutions on the go; business cases.',

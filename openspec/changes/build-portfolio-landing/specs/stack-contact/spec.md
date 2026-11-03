@@ -7,7 +7,7 @@ Mostrar as tecnologias de Gabriel com hierarquia clara e oferecer canais diretos
 ## ADDED Requirements
 
 ### Requirement: Stack priorizada
-A seção SHALL exibir a stack em dois níveis: destaque (Java com Spring, PostgreSQL, Node.js, Angular, React e IA) e secundária (Go, AWS, RabbitMQ, Kafka, Docker, Kubernetes, MySQL, Oracle, MongoDB). O Angular, e não o React, SHALL ter o realce escuro de destaque, junto do Java. As tecnologias secundárias SHALL ter tamanho confortável de leitura (não apenas etiquetas minúsculas), claramente menores que as de destaque.
+A seção SHALL exibir a stack em dois níveis: destaque (Java com Spring, PostgreSQL, Node.js, Angular, React e IA) e secundária (Go, AWS, RabbitMQ, Docker, Kubernetes, MySQL, Oracle, MongoDB). O Angular, e não o React, SHALL ter o realce escuro de destaque, junto do Java. As tecnologias secundárias SHALL ter tamanho confortável de leitura (não apenas etiquetas minúsculas), claramente menores que as de destaque.
 
 #### Scenario: Hierarquia
 - **WHEN** a seção é exibida

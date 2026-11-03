@@ -10,7 +10,7 @@ export function Contact() {
   const { contact } = useT();
 
   return (
-    <Section id="contact" index="05" title={contact.sectionTitle} dark>
+    <Section id="contact" index="05" title={contact.sectionTitle} dark reveal="drop">
       <p className={styles.intro}>{contact.intro}</p>
 
       <ul className={styles.channels}>

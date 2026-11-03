@@ -1,6 +1,8 @@
 @use 'tokens' as t;
 @use 'mixins' as m;
 
+$ease: cubic-bezier(0.2, 0.8, 0.2, 1);
+
 .item {
   display: flex;
   list-style: none;
@@ -10,18 +12,92 @@
   display: flex;
   flex: 1;
   flex-direction: column;
+  min-width: 0;
+  border: t.$border solid t.$ink;
+  background: t.$card;
+  color: t.$ink;
+  cursor: pointer;
+  @include m.hard-shadow(t.$shadow, 8px);
+  transition: transform 0.25s $ease, box-shadow 0.25s $ease;
+
+  &:hover {
+    transform: translate(-3px, -3px);
+    box-shadow: 11px 11px 0 0 t.$shadow;
+  }
+
+  @include m.reduced-motion {
+    transition: none;
+
+    &:hover {
+      transform: none;
+    }
+  }
+}
+
+.top {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.4rem 0.75rem;
+  padding: 0.65rem 0.9rem;
+  border-bottom: t.$border solid t.$ink;
+  @include m.label;
+  font-size: 0.72rem;
+}
+
+.kicker {
+  color: t.$ink;
+}
+
+.meta {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  color: t.$plum;
+}
+
+.badge {
+  padding: 0.2rem 0.55rem;
+  background: t.$ink;
+  color: t.$paper;
+}
+
+.body {
+  display: grid;
+  flex: 1;
+  align-content: start;
   gap: 0.9rem;
-  padding: 1.4rem;
+  padding: 1.1rem 1.1rem 1.25rem;
 }
 
 .name {
-  @include m.display-title(clamp(1.6rem, 3.2vw, 2.2rem));
-  line-height: 1.05;
+  @include m.display-title(clamp(2rem, 4.5vw, 2.8rem));
+  line-height: 1;
 }
 
 .tagline {
-  flex: 1;
   font-size: 1rem;
+  line-height: 1.5;
+}
+
+.bullets {
+  display: grid;
+  gap: 0.4rem;
+  margin: 0;
+  padding-left: 1.2rem;
+  font-size: 0.95rem;
+}
+
+.foot {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  padding: 0.75rem 0.9rem;
+  border-top: t.$border solid t.$ink;
+  background: t.$card;
 }
 
 .tags {
@@ -31,12 +107,31 @@
   margin: 0;
 }
 
-.credit {
+.more {
   @include m.label;
-  font-size: 0.72rem;
-  color: t.$plum;
-}
+  padding: 0.35rem 0;
+  border: 0;
+  background: transparent;
+  color: t.$ink;
+  text-decoration: underline;
+  text-decoration-thickness: 3px;
+  text-underline-offset: 4px;
+  cursor: pointer;
+  transition: padding 0.2s $ease, background-color 0.2s $ease, color 0.2s $ease;
 
-.open {
-  align-self: flex-start;
+  &:hover,
+  &:focus-visible {
+    padding-inline: 0.8rem;
+    background: t.$ink;
+    color: t.$paper;
+    text-decoration-color: transparent;
+  }
+
+  &:focus-visible {
+    @include m.focus-ring;
+  }
+
+  @include m.reduced-motion {
+    transition: none;
+  }
 }
