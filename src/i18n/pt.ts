@@ -21,9 +21,9 @@ export const pt = {
   },
   about: {
     sectionTitle: 'Sobre mim',
-    titlePre: 'Engenharia de software com ',
-    titleHighlight: 'dados',
-    titlePost: ' no centro.',
+    titlePre: 'Engenharia de software pautada em ',
+    titleHighlight: 'eficiência',
+    titlePost: '.',
     body: 'Engenheiro de Software e dev fullstack em Maringá, PR. Trabalho com Java, Spring Boot, Angular e React e sigo evoluindo tecnicamente. Comecei em suporte de dados e cresci até fullstack. Na Axion, consultoria júnior da Unicesumar, entrego projetos reais para clientes. Estou terminando minha graduação em Engenharia de Software e busco oportunidades de aprimorar minhas hard e soft skills.',
     photoAlt: 'Gabriel Arantes de óculos e barba, com crachá da Axion, apontando durante um evento',
     cardExchangeLabel: 'Intercâmbio',

@@ -63,7 +63,7 @@ describe('Sobre mim', () => {
     expect(screen.getByText('Intercâmbio')).toBeInTheDocument();
     expect(screen.getByText('Foco atual')).toBeInTheDocument();
     expect(screen.getByText('Stack principal')).toBeInTheDocument();
-    expect(screen.getByText('dados').tagName).toBe('MARK');
+    expect(screen.getByText('eficiência').tagName).toBe('MARK');
   });
 
   it('o foco é evoluir tecnicamente: sem gestão pública no texto, no cartão de foco e na lista', () => {
