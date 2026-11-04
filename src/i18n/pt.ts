@@ -6,7 +6,7 @@ export const pt = {
     switchToEn: 'Mudar para inglês',
   },
   hero: {
-    kicker: 'Aberto a oportunidades',
+    kicker: 'Maringá, PR · Brasil',
     role: 'Engenheiro de Software • Desenvolvedor Fullstack',
     stageExtract: 'Extrair',
     stageTransform: 'Transformar',
