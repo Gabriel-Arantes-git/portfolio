@@ -8,7 +8,7 @@ export const en: Dictionary = {
     switchToEn: 'Switch to English',
   },
   hero: {
-    kicker: 'Open to opportunities',
+    kicker: 'Maringá, PR · Brazil',
     role: 'Software Engineer • Fullstack Developer',
     stageExtract: 'Extract',
     stageTransform: 'Transform',
