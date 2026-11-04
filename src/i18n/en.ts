@@ -23,9 +23,9 @@ export const en: Dictionary = {
   },
   about: {
     sectionTitle: 'About me',
-    titlePre: 'Software engineering with ',
-    titleHighlight: 'data',
-    titlePost: ' at the core.',
+    titlePre: 'Software engineering driven by ',
+    titleHighlight: 'efficiency',
+    titlePost: '.',
     body: "Software engineer and fullstack developer in Maringá, Brazil. I work with Java, Spring Boot, Angular and React, always chasing technical growth. I started in data support and grew into fullstack. At Axion, Unicesumar's junior consultancy, I deliver real projects for real clients. I am finishing my degree in Software Engineering and looking for opportunities to sharpen my hard and soft skills.",
     photoAlt: 'Gabriel Arantes with glasses and a beard, wearing an Axion badge and pointing during an event',
     cardExchangeLabel: 'Exchange',
